@@ -6,33 +6,35 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/app.css">
   
     <link rel = "icon" href="icono.png" type = "image/x-icon">
 
-    <title>Cuán segura es mi contraseña?</title>
+    <title>¿Cuán segura es mi contraseña?</title>
   </head>
   <body>
-    <div class="container-fluid my-container">
-      <div class="row">
-        <div class="col-9">
-          <h1>Cuán segura es mi contraseña?</h1>
-        </div>
-        <div class="col-3">
-          <p>Olvidate de las contraseñas vulnerables verificando su seguridad en instantes!</p></div>
-      </div>
+    <div class="container-fluid my-header">
+      <h1>¿Cuán segura es mi contraseña?</h1>
+      
     </div>
     
     <div class="container-fluid">
-      <form class="form-group ">
-        <input type="password" class="form-control mb-3" id="password" placeholder="Password">
-        <div class="form-check mb-3">
-          <input type="checkbox" class="form-check-input" onclick="togglePassword()"></input>
-          <label class="form-check-label" for="gridCheck">
-            Mostrar contraseña
-          </label>
+      <form class="form-group">
+        <div class="row pwd-row p-1">
+          <div class="col-11">
+            <input type="password" class="password" id="password-input" placeholder="Password">
+          </div>
+          <div class="col-1">
+            <i id="password-icon" class="fa fa-eye pwd-icon" onclick="togglePassword()"></i>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-3">Verificar</button>
+        <div class="row p-3">
+          <div class="col-11 text-center">
+            <button type="submit" class="btn btn-primary btn-lg mb-3" onclick="togglePassword()">Verificar</button>
+          </div>
+        </div>
+        
       </form>
     </div>
     
