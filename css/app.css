@@ -11,14 +11,6 @@ h1{
 }
 
 .password {
-    
-    /**border: 1px solid #fff;
-    line-height: 1.5em;
-    background: #fff;
-
-    height: 1.5em;
-    display: block;
-    background: rgba(255, 255, 255, .6);*/
     border: none;
     width: 100%;
     font-size: 1.5em;
@@ -27,9 +19,11 @@ h1{
 .password:focus {
     outline: none
 }
+
 .pwd-row {
     background-color: white;
 }
+
 .pwd-icon {
     font-size: 2em;
     margin: auto;
