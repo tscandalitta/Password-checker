@@ -1,8 +1,11 @@
 function togglePassword() {
-    var x = document.getElementById("password");
-    if (x.type === "password") {
-      x.type = "text";
+    var pwd = document.getElementById("password-input");
+    var icon = document.getElementById("password-icon");
+    if (pwd.type === "password") {
+      pwd.type = "text";
+      icon.className = "fa fa-eye-slash pwd-icon";
     } else {
-      x.type = "password";
+      pwd.type = "password";
+      icon.className = "fa fa-eye pwd-icon";
     }
   }
