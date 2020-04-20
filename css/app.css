@@ -1,8 +1,10 @@
-
+:root {
+    --gris: #e9ecef;
+}
 .my-header{ 
     text-align: center;
     padding: 2em;
-    background-color: #e9ecef;
+    background-color: var(--gris);
 }
 
 .password {
@@ -17,8 +19,8 @@
 
 .pwd-row {
     background-color: white;
-    border: solid 1.5px;
-    border-color: #e9ecef;
+    border: 1.5px solid;
+    border-color: var(--gris);
 }
 
 .pwd-icon {
@@ -29,6 +31,10 @@
 
 .title {
     font-size: 1em;
+}
+
+.table {
+    border: 1px solid var(--gris);
 }
 @media only screen and (min-width: 420px) {
     .title {
@@ -59,10 +65,4 @@
     .title {
         font-size: 4em;
     }
-}
-
-
-
-.asd{
-    border: solid 2px;
 }
