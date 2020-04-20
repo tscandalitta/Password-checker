@@ -6,9 +6,7 @@ body{
     padding: 2em;
   }
 
-h1{
-    font-size: 4em;
-}
+
 
 .password {
     border: none;
@@ -29,6 +27,26 @@ h1{
     margin: auto;
     float: right;
 }
+
+@media only screen and (min-width: 640px) {
+    .title {
+        font-size: 2em;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .title {
+        font-size: 3em;
+    }
+}
+
+@media only screen and (min-width: 1080px) {
+    .title {
+        font-size: 4em;
+    }
+}
+
+
 
 .asd{
     border: solid 2px;
