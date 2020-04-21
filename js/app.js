@@ -3,6 +3,7 @@ var passwordsAlmacenadas = 5;
 var keylocalStorage = "passwords";
 var tablaPasswords = document.getElementById("tablaPasswords");
 var tablaPasswordsBody = document.getElementById("tablaPasswordsBody");
+actualizarTabla();
 
 function actualizarTabla(){
     var pwdArray = getPasswords();
