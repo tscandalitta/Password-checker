@@ -7,6 +7,12 @@
     background-color: var(--gris);
 }
 
+.footer{
+    border-top: 1px solid;
+    border-color: var(--gris);
+    padding: 1em;
+}
+
 .password {
     border: none;
     width: 100%;
@@ -29,29 +35,29 @@
     float: right;
 }
 
-.title {
-    font-size: 1em;
+.tabla-borde-gris {
+    border: 1px solid var(--gris);
 }
 
-.table {
-    border: 1px solid var(--gris);
+.title {
+    font-size: 1.5em;
 }
 @media only screen and (min-width: 420px) {
     .title {
         font-size: 1.5em;
     }
 }
-@media only screen and (min-width: 530px) {
+@media only screen and (min-width: 540px) {
     .title {
         font-size: 2em;
     }
 }
-@media only screen and (min-width: 650px) {
+@media only screen and (min-width: 660px) {
     .title {
         font-size: 2.5em;
     }
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 780px) {
     .title {
         font-size: 3em;
     }
