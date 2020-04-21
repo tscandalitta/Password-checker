@@ -11,7 +11,7 @@ function actualizarTabla(){
             while(tablaPasswordsBody.hasChildNodes()) {
                 tablaPasswordsBody.removeChild(tablaPasswordsBody.firstChild);
             }
-            for (var i in pwdArray) {
+            for (var i = pwdArray.length - 1; i >= 0; i--) {
                 var tr = document.createElement('TR');
                 var td = document.createElement('TD');
                 td.appendChild(document.createTextNode(pwdArray[i]));
