@@ -4,10 +4,21 @@
 }
 .my-header{ 
     text-align: center;
+    color: white;
     padding: 2em;
     background-color: var(--azul-marino);
 }
 
+.btn-principal{
+    color: white;
+    background-color: var(--azul-marino);
+    border-color: var(--azul-marino);
+}
+
+.btn-principal:hover{
+    color: white;
+    background-color: #375B80;
+}
 .bg-gris{
     background-color: var(--gris);
 }
