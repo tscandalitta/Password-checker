@@ -8,9 +8,14 @@
     background-color: var(--azul-marino);
 }
 
+.bg-gris{
+    background-color: var(--gris);
+}
+
 .bg-azul{
     background-color: var(--azul-marino);
 }
+
 .footer{
     border-top: 1px solid;
     border-color: var(--gris);
@@ -36,13 +41,29 @@
 }
 
 .pwd-icon {
-    font-size: 2em;
+    font-size: 1.7em;
     margin: auto;
     float: right;
 }
 
 .tabla-borde-gris {
     border: 1px solid var(--gris);
+}
+
+.icono-gris{
+    color: var(--gris);
+}
+
+.icono-amarillo{
+    color: rgb(238, 221, 65);
+}
+
+.icono-verde{
+    color: rgb(33, 209, 33);
+}
+
+.icono-rojo{
+    color: rgb(202, 29, 29);
 }
 
 .title {
@@ -77,4 +98,8 @@
     .title {
         font-size: 4em;
     }
+}
+
+.disabled {
+    opacity: 0.65;
 }
