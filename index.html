@@ -6,7 +6,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href="css/app.css">
   
     <link rel = "icon" href="icono.png" type = "image/x-icon">
@@ -19,17 +19,17 @@
     </div>
     
     <div class="container-fluid">
-        <div class="row pwd-row p-1">
-          <div class="col-11">
+        <div class="row pwd-row justify-content-end p-1">
+          <div class="col-10">
             <input type="password" class="password" id="password-input" placeholder="Contraseña">
           </div>
           <div class="col-1">
-            <i class="fa fa-eye pwd-icon" id="password-icon" onclick="togglePassword()"></i>
+            <i class="far fa-eye pwd-icon" id="password-icon" onclick="togglePassword()"></i>
           </div>
         </div>
         <div class="row p-3">
-          <div class="col-11 text-center">
-            <button type="button" class="btn bg-azul btn-lg mb-3" id="password-button" onclick="checkPassword()">Verificar</button>
+          <div class="col text-center">
+            <button type="button" class="btn btn-principal btn-lg mb-3" id="password-button" onclick="checkPassword()">Verificar</button>
           </div>
         </div>
     </div>
@@ -37,8 +37,8 @@
     <div class="container">
       <div class="row justify-content-between">
         <div class="col-md-6">
-          <table class="table tabla-borde-gris">
-            <thead class="bg-azul">
+          <table class="table tabla-borde-gris" id="tabla-puntos-favor">
+            <thead class="bg-gris">
               <tr>
                 <th scope="col" colspan="2">Puntos a favor</th>
               </tr>
@@ -46,21 +46,33 @@
             <tbody>
               <tr>
                 <td>Letras minúsculas</td>
-                <td>No</td>
+                <td>
+                  <span>
+                    <i class="fas fa-minus"></i>
+                  </span>
+                </td>
               </tr>
               <tr>
                 <td>Letras mayúsculas</td>
-                <td>No</td>
+                <td>
+                  <span class="icono-verde">
+                    <i class="fas fa-check"></i>
+                  </span>
+                </td>
               </tr>
               <tr>
                 <td>Números</td>
-                <td>No</td>
+                <td>
+                  <span class="icono-rojo">
+                    <i class="fas fa-times"></i>
+                  </span>
+              </td>
               </tr>
               <tr>
                 <td>Símbolos</td>
                 <td>No</td>
               </tr>
-              <tr>
+              <tr >
                 <td>Longitud</td>
                 <td>No</td>
               </tr>
@@ -70,8 +82,8 @@
               </tr>
             </tbody>
           </table>
-          <table class="table tabla-borde-gris">
-            <thead class="bg-azul">
+          <table class="table tabla-borde-gris" id="tabla-puntos-contra">
+            <thead class="bg-gris">
               <tr>
                 <th scope="col" colspan="2">Puntos en contra</th>
               </tr>
@@ -102,7 +114,7 @@
         </div>
         <div class="col-md-5">
           <table class="table tabla-borde-gris" id="tablaPasswords">
-            <thead class="bg-azul">
+            <thead class="bg-gris">
               <tr>
                 <th scope="col" id="tablaPasswordsHeader">Últimas contraseñas chequeadas</th>
               </tr>
