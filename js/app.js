@@ -1,18 +1,22 @@
 
-var passwordsAlmacenadas = 4;
+var passwordsAlmacenadas = 5;
 var keylocalStorage = "passwords";
 var tablaPasswords = document.getElementById("tablaPasswords");
 var tablaPasswordsBody = document.getElementById("tablaPasswordsBody");
 init();
 
+/**
+ * Permite simular un click en el boton de validacion al presionar la tecla
+ * Enter sobre el campo de entrada de la contraseña.
+ */
+document.querySelector("#password-input").addEventListener("keyup", event => {
+    if(event.key !== "Enter") return;
+    document.querySelector("#password-button").click();
+    event.preventDefault();
+});
+
 function init(){
     actualizarTablaPasswords();
-    inicializarHeaderPasswords();
-}
-
-function inicializarHeaderPasswords(){
-    var headerPasswords = document.getElementById("tablaPasswordsHeader");
-    headerPasswords.innerHTML = "Últimas " + passwordsAlmacenadas + " contraseñas";
 }
 
 function actualizarTablaPasswords(){
@@ -69,7 +73,7 @@ function storePassword(password) {
 
 /**
  * Almacena la contraseña en el arreglo. 
- * Si se achica el tamaño del arreglo, pueden quedar contraseñas almacenadas
+ * Si se achica el tamaño del arreglo, pueden quedar contraseñas almacenadas de más
  * en el localStorage por lo que las elimina hasta cumplir con el tamaño deseado.
  * @param {array} array - arreglo de contraseñas
  * @param {string} password - contraseña a almacenar en el arreglo 
