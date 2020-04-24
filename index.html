@@ -43,43 +43,7 @@
                 <th scope="col" colspan="2">Puntos a favor</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Letras minúsculas</td>
-                <td>
-                  <span>
-                    <i class="fas fa-minus"></i>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>Letras mayúsculas</td>
-                <td>
-                  <span class="icono-verde">
-                    <i class="fas fa-check"></i>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td>Números</td>
-                <td>
-                  <span class="icono-rojo">
-                    <i class="fas fa-times"></i>
-                  </span>
-              </td>
-              </tr>
-              <tr>
-                <td>Símbolos</td>
-                <td>No</td>
-              </tr>
-              <tr >
-                <td>Longitud</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>Caracteres raros (ASCII > 127)</td>
-                <td>No</td>
-              </tr>
+            <tbody id="tabla-puntos-favor-body">
             </tbody>
           </table>
           <table class="table tabla-borde-gris" id="tabla-puntos-contra">
@@ -88,44 +52,26 @@
                 <th scope="col" colspan="2">Puntos en contra</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Solo letras</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>Solo números</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>Letras consecutivas</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>Números consecutivos</td>
-                <td>No</td>
-              </tr>
-              <tr>
-                <td>Secuencia de números</td>
-                <td>No</td>
-              </tr>
+            <tbody id="tabla-puntos-contra-body">
             </tbody>
           </table>
         </div>
         <div class="col-md-5">
-          <table class="table tabla-borde-gris" id="tablaPasswords">
-            <thead class="bg-gris">
-              <tr>
-                <th scope="col" id="tablaPasswordsHeader">Últimas contraseñas chequeadas</th>
-              </tr>
-            </thead>
-            <tbody id="tablaPasswordsBody">
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table tabla-borde-gris" id="tablaPasswords">
+              <thead class="bg-gris">
+                <tr>
+                  <th scope="col" id="tablaPasswordsHeader">Últimas contraseñas chequeadas</th>
+                </tr>
+              </thead>
+              <tbody id="tablaPasswordsBody">
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-
+    
     <div class="container">
       <footer class="footer">
         <div class="row justify-content-center">
