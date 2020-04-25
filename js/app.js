@@ -2,6 +2,9 @@
 var iconoPasswordOculta = "far fa-eye-slash pwd-icon";
 var iconoPasswordVisible = "far fa-eye pwd-icon";
 var iconoPorDefecto = "fas fa-minus";
+var iconoCruz = "fas fa-times";
+var iconoCheck = "fas fa-check";
+var iconoCheckDoble = "fas fa-check-double";
 
 class Parametro {
     constructor(id, descripcion, valor) {
@@ -69,17 +72,17 @@ function actualizarTablaFavor(){
         var parametro = parametrosAFavor[i];
         var tr = document.getElementById(parametro);
         var clase = "disabled";
-        var iconClass = "fas fa-minus";
+        var iconClass = iconoPorDefecto;
         var spanClass = "";
         if (valores[parametro] != NOCUMPLE){
             clase = "";
-            iconClass = "fas fa-check";
+            iconClass = iconoCheck;
             if(valores[parametro] == REGULAR)
                 spanClass = "icono-amarillo";
             else 
                 spanClass = "icono-verde";
             if(valores[parametro] == MUYBUENO)
-                iconClass = "fas fa-check-double";
+                iconClass = iconoCheckDoble;
         }
         var span = tr.lastChild.firstChild;
         span.className = spanClass;
@@ -94,11 +97,11 @@ function actualizarTablaContra(){
         var parametro = parametrosEnContra[i];
         var tr = document.getElementById(parametro);
         var clase = "disabled";
-        var iconClass = "fas fa-minus";
+        var iconClass = iconoPorDefecto;
         var spanClass = "";
         if (booleanos[parametro]){
             clase = "";
-            iconClass = "fas fa-times";
+            iconClass = iconoCruz;
             spanClass = "icono-rojo";
         }
         var span = tr.lastChild.firstChild;
@@ -165,7 +168,7 @@ String.prototype.strReverse = function () {
 		newstring = this.charAt(s) + newstring;
 	}
 	return newstring;
-};
+}
 
 function setIcon(tr){
     var td = document.createElement('td');
@@ -176,7 +179,6 @@ function setIcon(tr){
     td.appendChild(span);
     tr.appendChild(td);
 }
-
 
 function init(){
     actualizarTablaPasswords();
@@ -192,7 +194,7 @@ function chkPass(pwd) {
 
     var soloLetrasP = false, soloNumerosP = false, secuenciaSimbolosP = false,
         secuenciaLetrasP = false, secuenciaNumerosP = false;
-
+    
 	var	nConsecAlphaUC = 0, nConsecAlphaLC = 0,	nConsecNumber = 0,	nSeqAlpha = 0, nSeqNumber = 0,
         nSeqSymbol = 0;
         
@@ -201,7 +203,7 @@ function chkPass(pwd) {
 	var nMultLength = nMultNumber = 4;
     var nMultSymbol = 6;
 
-    var nTmpAlphaUC = "", nTmpAlphaLC = "", nTmpNumber = "";
+    
 
 	var secuenciaLetras = "abcdefghijklmnopqrstuvwxyz";
 	var secuenciaNumeros = "01234567890";
@@ -213,7 +215,8 @@ function chkPass(pwd) {
     var arrPwd = pwd.replace(/\s+/g, "").split(/\s*/);            //PRBAR SACAR EL REPLACE
     var arrPwdLen = arrPwd.length;
 
-    /* Loop through password to check for Symbol, Numeric, Lowercase and Uppercase pattern matches */
+    /* Loop sobre la contraseña para buscar coincidencias de minúsculas, mayúsculas, numeros y simbolos */
+    var nTmpAlphaUC = "", nTmpAlphaLC = "", nTmpNumber = "";
     for (var a = 0; a < arrPwdLen; a++) {
         if (arrPwd[a].match(/[A-Z]/g)) {                        //PROBAR SI PUEDO SACAR EL /G
             if (nTmpAlphaUC !== "") {
@@ -323,7 +326,6 @@ function chkPass(pwd) {
         secuenciaSimbolosP = true;
     }
 
-
     /* Determina la complejidad basada en el puntaje general */
 
     if (puntajeP > 100) 
@@ -331,6 +333,8 @@ function chkPass(pwd) {
     else if (puntajeP < 0) 
         puntajeP = 0;
     
+    puntaje.valor = puntajeP;
+
     if (puntajeP < 20)
         complejidad = "Muy débil";
     else if (puntajeP < 40)
@@ -342,7 +346,7 @@ function chkPass(pwd) {
     else
         complejidad = "Muy fuerte";
         
-    alert("puntajeP: "+ puntajeP +", complejidad: "+ complejidad);
+    alert("puntajeP: "+ puntaje.valor +", complejidad: "+ complejidad);
 
     /* Mapea los valores de los parametros a REGULAR - BUENO - MUYBUENO */
 
