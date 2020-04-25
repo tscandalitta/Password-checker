@@ -1,46 +1,28 @@
 
+class Parametro {
+    constructor(id, descripcion, valor) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.valor = valor;
+    }
+}
 
-var tablaPuntosFavorBody = document.getElementById("tabla-puntos-favor-body");
-var tablaPuntosContraBody = document.getElementById("tabla-puntos-contra-body");
+var puntaje = new Parametro("puntaje","Puntaje",0);
+var longitud = new Parametro("longitud","Longitud",0);
+var cantMayusculas = new Parametro("cantMayusculas","Letras mayúsculas",0);
+var cantMinusculas = new Parametro("cantMinusculas","Letras minúsculas",0);
+var cantNumeros = new Parametro("cantNumeros","Números",0);
+var cantSimbolos = new Parametro("cantSimbolos","Símbolos",0);
+var soloLetras = new Parametro("soloLetras","Solo letras",false);
+var soloNumeros = new Parametro("soloNumeros","Solo números",false);
+var tieneSecuenciaLetras = new Parametro("tieneSecuenciaLetras","Secuencia de letras",false);
+var tieneSecuenciaNumeros = new Parametro("tieneSecuenciaNumeros","Secuencia de números",false);
+var tieneSecuenciaSimbolos = new Parametro("tieneSecuenciaSimbolos","Secuencia de símbolos",false);
 
-var puntaje = "puntaje", longitud = "longitud", cantMayusculas = "cantMayusculas", 
-    cantMinusculas = "cantMinusculas", cantNumeros = "cantNumeros",
-    cantSimbolos = "cantSimbolos", soloLetras = "soloLetras", soloNumeros = "soloNumeros", 
-    tieneSecuenciaSimbolos = "tieneSecuenciaSimbolos", tieneSecuenciaLetras = "tieneSecuenciaLetras", 
-    tieneSecuenciaNumeros = "tieneSecuenciaNumeros", miParametro = "miParametro";
-
-var parametrosAFavor = [longitud,cantMayusculas,cantMinusculas,cantNumeros,cantSimbolos,miParametro];
+var parametrosAFavor = [longitud,cantMayusculas,cantMinusculas,cantNumeros,cantSimbolos];
 
 var parametrosEnContra = [soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecuenciaNumeros, 
                             tieneSecuenciaSimbolos];
-
-var textos = new Array();
-textos[longitud] = "Longitud";
-textos[cantMayusculas] = "Letras mayúsculas";
-textos[cantMinusculas] = "Letras minúsculas";
-textos[cantNumeros] = "Números";
-textos[cantSimbolos] = "Símbolos";
-textos[soloLetras] = "Solo letras";
-textos[soloNumeros] = "Solo números";
-textos[tieneSecuenciaSimbolos] = "Secuencia de símbolos";
-textos[tieneSecuenciaLetras] = "Secuencia de letras";
-textos[tieneSecuenciaNumeros] = "Secuencia de números";
-textos[miParametro] = "Este es un parametro nuevo";
-
-var valores = new Array();
-valores[longitud] = 0;
-valores[cantMayusculas] = 0;
-valores[cantMinusculas] = 0;
-valores[cantNumeros] = 0;
-valores[cantSimbolos] = 0;
-valores[miParametro] = 0;
-
-var booleanos = new Array();
-booleanos[soloLetras] = false;
-booleanos[soloNumeros] = false;
-booleanos[tieneSecuenciaSimbolos] = false;
-booleanos[tieneSecuenciaLetras] = false;
-booleanos[tieneSecuenciaNumeros] = false;
 
 const NOCUMPLE = 0;
 const REGULAR = 1;
@@ -54,15 +36,16 @@ $("#password-button").click(function(){
 
 init();
 
-function completarTablaFavor(body){
+function completarTablas() {
+    var tablaPuntosFavorBody = document.getElementById("tabla-puntos-favor-body");
+    var tablaPuntosContraBody = document.getElementById("tabla-puntos-contra-body");
     for(var i = 0; i < parametrosAFavor.length; i++){
-        completarFila(body,parametrosAFavor[i],textos[parametrosAFavor[i]]);
+        var parametro = parametrosAFavor[i];
+        completarFila(tablaPuntosFavorBody,parametro.id,parametro.descripcion);
     }
-}
-
-function completarTablaContra(body){
     for(var i = 0; i < parametrosEnContra.length; i++){
-        completarFila(body,parametrosEnContra[i],textos[parametrosEnContra[i]]);
+        var parametro = parametrosEnContra[i];
+        completarFila(tablaPuntosContraBody,parametro.id,parametro.descripcion);
     }
 }
 
@@ -161,11 +144,6 @@ function togglePassword() {
     }
 }
 
-function Particle() {
-    this.x = 100;
-    this.y = 80;
-}
-
 function checkPassword() {
     var password = $("#password-input").val();
     if(password != "") {
@@ -195,19 +173,10 @@ function setIcon(tr){
     tr.appendChild(td);
 }
 
-var arr=[1,2,3,4,7];
 
-function imprimir(array){
-    alert(array);
-    for(i in array){
-        alert(array[i]);
-    }
-}
 function init(){
     actualizarTablaPasswords();
-    completarTablaFavor(tablaPuntosFavorBody);
-    completarTablaContra(tablaPuntosContraBody);
-    imprimir.apply(null,arr);
+    completarTablas();
 }
 
 function chkPass(pwd) {
