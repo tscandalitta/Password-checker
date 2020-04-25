@@ -1,4 +1,8 @@
 
+var iconoPasswordOculta = "far fa-eye-slash pwd-icon";
+var iconoPasswordVisible = "far fa-eye pwd-icon";
+var iconoPorDefecto = "fas fa-minus";
+
 class Parametro {
     constructor(id, descripcion, valor) {
         this.id = id;
@@ -137,10 +141,10 @@ function togglePassword() {
     var icon = document.getElementById("password-icon");
     if (password.type == "password") {
         password.type = "text";
-        icon.className = "far fa-eye-slash pwd-icon";
+        icon.className = iconoPasswordOculta;
     } else {
         password.type = "password";
-        icon.className = "far fa-eye pwd-icon";
+        icon.className = iconoPasswordVisible;
     }
 }
 
@@ -167,7 +171,7 @@ function setIcon(tr){
     var td = document.createElement('td');
     var span = document.createElement('span');
     var icon = document.createElement('i');
-    icon.className = "fas fa-minus";
+    icon.className = iconoPorDefecto;
     span.appendChild(icon);
     td.appendChild(span);
     tr.appendChild(td);
