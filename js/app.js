@@ -5,6 +5,9 @@ var iconoPorDefecto = "fas fa-minus";
 var iconoCruz = "fas fa-times";
 var iconoCheck = "fas fa-check";
 var iconoCheckDoble = "fas fa-check-double";
+var iconoVerde = "icono-verde";
+var iconoAmarillo = "icono-amarillo";
+var iconoRojo = "icono-rojo";
 
 class Parametro {
     constructor(id, descripcion, valor) {
@@ -14,17 +17,59 @@ class Parametro {
     }
 }
 
-var puntaje = new Parametro("puntaje","Puntaje",0);
-var longitud = new Parametro("longitud","Longitud",0);
-var cantMayusculas = new Parametro("cantMayusculas","Letras mayúsculas",0);
-var cantMinusculas = new Parametro("cantMinusculas","Letras minúsculas",0);
-var cantNumeros = new Parametro("cantNumeros","Números",0);
-var cantSimbolos = new Parametro("cantSimbolos","Símbolos",0);
-var soloLetras = new Parametro("soloLetras","Solo letras",false);
-var soloNumeros = new Parametro("soloNumeros","Solo números",false);
-var tieneSecuenciaLetras = new Parametro("tieneSecuenciaLetras","Secuencia de letras",false);
-var tieneSecuenciaNumeros = new Parametro("tieneSecuenciaNumeros","Secuencia de números",false);
-var tieneSecuenciaSimbolos = new Parametro("tieneSecuenciaSimbolos","Secuencia de símbolos",false);
+class ParametroEntero extends Parametro{
+    getClaseIcono(){
+        var claseIcono = iconoPorDefecto;
+        if(this.valor > 0){
+            if(this.valor <= 2)
+            claseIcono = iconoCheck;
+            else 
+            claseIcono = iconoCheckDoble;    
+        }
+        return claseIcono;
+    }
+
+    getColorIcono(){
+        var colorIcono = "";
+        if(this.valor > 0){
+            if(this.valor == 1)
+                colorIcono = iconoAmarillo;
+            else
+                colorIcono = iconoVerde;    
+        }
+        return colorIcono;
+    }
+}
+
+class ParametroBooleano extends Parametro{
+    getClaseIcono(){
+        var claseIcono = iconoPorDefecto;
+        if(this.valor == true){
+        claseIcono = iconoCruz;    
+        }
+        return claseIcono;
+    }
+
+    getColorIcono(){
+        var colorIcono = "";
+        if(this.valor == true){
+            colorIcono = iconoRojo;    
+        }
+        return colorIcono;
+    }
+}
+
+var puntaje = new ParametroEntero("puntaje","Puntaje",0);
+var longitud = new ParametroEntero("longitud","Longitud",0);
+var cantMayusculas = new ParametroEntero("cantMayusculas","Letras mayúsculas",0);
+var cantMinusculas = new ParametroEntero("cantMinusculas","Letras minúsculas",0);
+var cantNumeros = new ParametroEntero("cantNumeros","Números",0);
+var cantSimbolos = new ParametroEntero("cantSimbolos","Símbolos",0);
+var soloLetras = new ParametroBooleano("soloLetras","Solo letras",false);
+var soloNumeros = new ParametroBooleano("soloNumeros","Solo números",false);
+var tieneSecuenciaLetras = new ParametroBooleano("tieneSecuenciaLetras","Secuencia de letras",false);
+var tieneSecuenciaNumeros = new ParametroBooleano("tieneSecuenciaNumeros","Secuencia de números",false);
+var tieneSecuenciaSimbolos = new ParametroBooleano("tieneSecuenciaSimbolos","Secuencia de símbolos",false);
 
 var parametrosAFavor = [longitud,cantMayusculas,cantMinusculas,cantNumeros,cantSimbolos];
 
@@ -63,54 +108,26 @@ function completarFila(body, id, texto){
     tr.appendChild(td);
     setIcon(tr);
     tr.setAttribute("id",id);
-    tr.className = "disabled";
     body.appendChild(tr);
 }
 
-function actualizarTablaFavor(){
+function actualizarTablas(){
     for(var i = 0; i < parametrosAFavor.length; i++){
-        var parametro = parametrosAFavor[i];
-        var tr = document.getElementById(parametro);
-        var clase = "disabled";
-        var iconClass = iconoPorDefecto;
-        var spanClass = "";
-        if (valores[parametro] != NOCUMPLE){
-            clase = "";
-            iconClass = iconoCheck;
-            if(valores[parametro] == REGULAR)
-                spanClass = "icono-amarillo";
-            else 
-                spanClass = "icono-verde";
-            if(valores[parametro] == MUYBUENO)
-                iconClass = iconoCheckDoble;
-        }
-        var span = tr.lastChild.firstChild;
-        span.className = spanClass;
-        var icon = span.firstChild;
-        icon.className = iconClass;
-        tr.className = clase;
+        actualizarAux(parametrosAFavor[i]);
+    }
+    for(var i = 0; i < parametrosEnContra.length; i++){
+        actualizarAux(parametrosEnContra[i]);
     }
 }
 
-function actualizarTablaContra(){
-    for(var i = 0; i < parametrosEnContra.length; i++){
-        var parametro = parametrosEnContra[i];
-        var tr = document.getElementById(parametro);
-        var clase = "disabled";
-        var iconClass = iconoPorDefecto;
-        var spanClass = "";
-        if (booleanos[parametro]){
-            clase = "";
-            iconClass = iconoCruz;
-            spanClass = "icono-rojo";
-        }
-        var span = tr.lastChild.firstChild;
-        span.className = spanClass;
-        var icon = span.firstChild;
-        icon.className = iconClass;
-        tr.className = clase;
-    }
+function actualizarAux(parametro){
+    var tr = document.getElementById(parametro.id);
+    var span = tr.lastChild.firstChild;
+    span.className = parametro.getColorIcono();
+    var icon = span.firstChild;
+    icon.className = parametro.getClaseIcono();
 }
+
 /**
  * Permite simular un click en el boton de validacion al presionar la tecla
  * Enter sobre el campo de entrada de la contraseña.
@@ -157,8 +174,7 @@ function checkPassword() {
         chkPass(password);
         storePassword(password);
         actualizarTablaPasswords();
-        actualizarTablaFavor();
-        actualizarTablaContra();
+        actualizarTablas();
     }
 }
 
@@ -191,19 +207,14 @@ function chkPass(pwd) {
     
     var puntajeP = 0; longitudP = 0; cantMayusculasP = 0, cantMinusculasP = 0, cantNumerosP = 0,
         cantSimbolosP = 0;
-
     var soloLetrasP = false, soloNumerosP = false, secuenciaSimbolosP = false,
         secuenciaLetrasP = false, secuenciaNumerosP = false;
-    
 	var	nConsecAlphaUC = 0, nConsecAlphaLC = 0,	nConsecNumber = 0,	nSeqAlpha = 0, nSeqNumber = 0,
         nSeqSymbol = 0;
-        
     var nMultConsecAlphaUC = 2,	nMultConsecAlphaLC = 2,	nMultConsecNumber = 2;
 	var nMultSeqAlpha = 3, nMultSeqNumber = 3, nMultSeqSymbol = 3;
 	var nMultLength = nMultNumber = 4;
     var nMultSymbol = 6;
-
-    
 
 	var secuenciaLetras = "abcdefghijklmnopqrstuvwxyz";
 	var secuenciaNumeros = "01234567890";
@@ -264,7 +275,6 @@ function chkPass(pwd) {
             nSeqNumber++;
         }
     }
-
     /* Busca secuencias de simbolos (hacia adelante y hacia atras) */
     for (var s = 0; s < 8; s++) {
         var sFwd = secuenciaSimbolos.substring(s, parseInt(s + 3));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
@@ -274,9 +284,7 @@ function chkPass(pwd) {
         }
     }
 
-
     /* Asignacion de puntajes */
-
     if (cantMayusculasP > 0 && cantMayusculasP < longitudP) {
         puntajeP = parseInt(puntajeP + ((longitudP - cantMayusculasP) * 2));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
     }
@@ -290,9 +298,7 @@ function chkPass(pwd) {
         puntajeP = parseInt(puntajeP + (cantSimbolosP * nMultSymbol));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
     }
 
-
     /* Reduccion de puntajeP debido a malas practicas */
-
     if ((cantMinusculasP > 0 || cantMayusculasP > 0) && cantSimbolosP === 0 && cantNumerosP === 0) { // Solo letras
         puntajeP = parseInt(puntajeP - longitudP);
         soloLetrasP = true;
@@ -327,75 +333,20 @@ function chkPass(pwd) {
     }
 
     /* Determina la complejidad basada en el puntaje general */
-
     if (puntajeP > 100) 
         puntajeP = 100;
     else if (puntajeP < 0) 
         puntajeP = 0;
     
     puntaje.valor = puntajeP;
-
-    if (puntajeP < 20)
-        complejidad = "Muy débil";
-    else if (puntajeP < 40)
-        complejidad = "Débil";
-    else if (puntajeP < 60)
-        complejidad = "Regular";
-    else if (puntajeP < 80)
-        complejidad = "Fuerte";
-    else
-        complejidad = "Muy fuerte";
-        
-    alert("puntajeP: "+ puntaje.valor +", complejidad: "+ complejidad);
-
-    /* Mapea los valores de los parametros a REGULAR - BUENO - MUYBUENO */
-
-    if (longitudP <= 8)
-        valores[longitud] = REGULAR;
-    else if (longitudP <= 12)
-        valores[longitud] = BUENO;
-    else 
-        valores[longitud] = MUYBUENO;
-
-    if(cantMayusculasP > 0){
-        if (cantMayusculasP == 1)
-            valores[cantMayusculas] = REGULAR;
-        else if (cantMayusculasP == 2)
-            valores[cantMayusculas] = BUENO;
-        else 
-            valores[cantMayusculas] = MUYBUENO;
-    }
-
-    if (cantMinusculasP > 0){
-        if (cantMinusculasP <= 2)
-            valores[cantMinusculas] = REGULAR;
-        else if (cantMinusculasP <= 4)
-            valores[cantMinusculas] = BUENO;
-        else 
-            valores[cantMinusculas] = MUYBUENO;
-    }
-
-    if(cantNumerosP > 0){
-        if (cantNumerosP == 1)
-            valores[cantNumeros] = REGULAR;
-        else if (cantNumerosP == 2)
-            valores[cantNumeros] = BUENO;
-        else 
-            valores[cantNumeros] = MUYBUENO;
-    }
-
-    if(cantSimbolosP > 0){
-        if (cantSimbolosP == 1)
-            valores[cantSimbolos] = REGULAR;
-        else if (cantSimbolosP == 2)
-            valores[cantSimbolos] = BUENO;
-        else 
-            valores[cantSimbolos] = MUYBUENO;
-    }
-
-    booleanos[soloLetras] = soloLetrasP;
-    booleanos[soloNumeros] = soloNumerosP;
-    booleanos[tieneSecuenciaSimbolos] = secuenciaSimbolosP;
-    booleanos[tieneSecuenciaLetras] = secuenciaLetrasP;
-    booleanos[tieneSecuenciaNumeros] = secuenciaNumerosP;
+    longitud.valor = longitudP;
+    cantMayusculas.valor = cantMayusculasP;
+    cantMinusculas.valor = cantMinusculasP;
+    cantNumeros.valor = cantNumerosP;
+    cantSimbolos.valor = cantSimbolosP;
+    soloLetras.valor = soloLetrasP;
+    soloNumeros.valor = soloNumerosP;
+    tieneSecuenciaSimbolos.valor = secuenciaSimbolosP;
+    tieneSecuenciaLetras.valor = secuenciaLetrasP;
+    tieneSecuenciaNumeros.valor = secuenciaNumerosP;
 }
