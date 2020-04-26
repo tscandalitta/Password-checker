@@ -9,56 +9,6 @@ var iconoVerde = "icono-verde";
 var iconoAmarillo = "icono-amarillo";
 var iconoRojo = "icono-rojo";
 
-class Parametro {
-    constructor(id, descripcion, valor) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.valor = valor;
-    }
-}
-
-class ParametroEntero extends Parametro{
-    getClaseIcono(){
-        var claseIcono = iconoPorDefecto;
-        if(this.valor > 0){
-            if(this.valor <= 2)
-            claseIcono = iconoCheck;
-            else 
-            claseIcono = iconoCheckDoble;    
-        }
-        return claseIcono;
-    }
-
-    getColorIcono(){
-        var colorIcono = "";
-        if(this.valor > 0){
-            if(this.valor == 1)
-                colorIcono = iconoAmarillo;
-            else
-                colorIcono = iconoVerde;    
-        }
-        return colorIcono;
-    }
-}
-
-class ParametroBooleano extends Parametro{
-    getClaseIcono(){
-        var claseIcono = iconoPorDefecto;
-        if(this.valor == true){
-        claseIcono = iconoCruz;    
-        }
-        return claseIcono;
-    }
-
-    getColorIcono(){
-        var colorIcono = "";
-        if(this.valor == true){
-            colorIcono = iconoRojo;    
-        }
-        return colorIcono;
-    }
-}
-
 var puntaje = new ParametroEntero("puntaje","Puntaje",0);
 var longitud = new ParametroEntero("longitud","Longitud",0);
 var cantMayusculas = new ParametroEntero("cantMayusculas","Letras mayúsculas",0);
@@ -76,14 +26,19 @@ var parametrosAFavor = [longitud,cantMayusculas,cantMinusculas,cantNumeros,cantS
 var parametrosEnContra = [soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecuenciaNumeros, 
                             tieneSecuenciaSimbolos];
 
-const NOCUMPLE = 0;
-const REGULAR = 1;
-const BUENO = 2;
-const MUYBUENO = 3;
-
 $("#password-button").click(function(){
     checkPassword();
     $("#alert-resultado").show(600);
+});
+
+/**
+ * Permite simular un click en el boton de validacion al presionar la tecla
+ * Enter sobre el campo de entrada de la contraseña.
+ */
+document.querySelector("#password-input").addEventListener("keyup", event => {
+    if(event.key !== "Enter") return;
+    document.querySelector("#password-button").click();
+    event.preventDefault();
 });
 
 init();
@@ -128,17 +83,6 @@ function actualizarAux(parametro){
     icon.className = parametro.getClaseIcono();
 }
 
-/**
- * Permite simular un click en el boton de validacion al presionar la tecla
- * Enter sobre el campo de entrada de la contraseña.
- */
-document.querySelector("#password-input").addEventListener("keyup", event => {
-    if(event.key !== "Enter") return;
-    document.querySelector("#password-button").click();
-    event.preventDefault();
-});
-
-
 function actualizarTablaPasswords(){
     var tablaPasswordsBody = document.getElementById("tablaPasswordsBody");
     var pwdArray = getPasswords();
@@ -168,16 +112,6 @@ function togglePassword() {
     }
 }
 
-function checkPassword() {
-    var password = $("#password-input").val();
-    if(password != "") {
-        chkPass(password);
-        storePassword(password);
-        actualizarTablaPasswords();
-        actualizarTablas();
-    }
-}
-
 String.prototype.strReverse = function () {
 	var newstring = "";
 	for (var s = 0; s < this.length; s++) {
@@ -201,6 +135,16 @@ function init(){
     completarTablas();
 }
 
+function checkPassword() {
+    var password = $("#password-input").val();
+    if(password != "") {
+        chkPass(password);
+        storePassword(password);
+        actualizarTablaPasswords();
+        actualizarTablas();
+    }
+}
+
 function chkPass(pwd) {
 	// Simultaneous variable declaration and value assignment aren't supported in IE apparently
 	// so I'm forced to assign the same value individually per var to support a crappy browser *sigh* 
@@ -222,7 +166,7 @@ function chkPass(pwd) {
 	var complejidad = "Muy débil";
 
     longitudP = pwd.length;
-    puntajeP = parseInt(longitudP * nMultLength);                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+    puntajeP = longitudP * nMultLength;
     var arrPwd = pwd.replace(/\s+/g, "").split(/\s*/);            //PRBAR SACAR EL REPLACE
     var arrPwdLen = arrPwd.length;
 
@@ -261,7 +205,7 @@ function chkPass(pwd) {
     /* Busca secuencias de letras (hacia adelante y hacia atras) */
     var pwdLowerCase = pwd.toLowerCase();
     for (var s = 0; s < 23; s++) {
-        var sFwd = secuenciaLetras.substring(s, parseInt(s + 3));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+        var sFwd = secuenciaLetras.substring(s, s+3);                  
         var sRev = sFwd.strReverse();
         if (pwdLowerCase.indexOf(sFwd) != -1 || pwdLowerCase.indexOf(sRev) != -1) {
             nSeqAlpha++;
@@ -269,7 +213,7 @@ function chkPass(pwd) {
     }
     /* Busca secuencias de numeros (hacia adelante y hacia atras) */
     for (var s = 0; s < 8; s++) {
-        var sFwd = secuenciaNumeros.substring(s, parseInt(s + 3));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+        var sFwd = secuenciaNumeros.substring(s, s+3);                   
         var sRev = sFwd.strReverse();
         if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
             nSeqNumber++;
@@ -277,7 +221,7 @@ function chkPass(pwd) {
     }
     /* Busca secuencias de simbolos (hacia adelante y hacia atras) */
     for (var s = 0; s < 8; s++) {
-        var sFwd = secuenciaSimbolos.substring(s, parseInt(s + 3));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+        var sFwd = secuenciaSimbolos.substring(s, s+3);                   
         var sRev = sFwd.strReverse();
         if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
             nSeqSymbol++;
@@ -286,49 +230,49 @@ function chkPass(pwd) {
 
     /* Asignacion de puntajes */
     if (cantMayusculasP > 0 && cantMayusculasP < longitudP) {
-        puntajeP = parseInt(puntajeP + ((longitudP - cantMayusculasP) * 2));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+        puntajeP += ((longitudP - cantMayusculasP) * 2);                  
     }
     if (cantMinusculasP > 0 && cantMinusculasP < longitudP) {
-        puntajeP = parseInt(puntajeP + ((longitudP - cantMinusculasP) * 2));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+        puntajeP += ((longitudP - cantMinusculasP) * 2);                  
     }
     if (cantNumerosP > 0 && cantNumerosP < longitudP) {
-        puntajeP = parseInt(puntajeP + (cantNumerosP * nMultNumber));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+        puntajeP += (cantNumerosP * nMultNumber);                  
     }
     if (cantSimbolosP > 0) {
-        puntajeP = parseInt(puntajeP + (cantSimbolosP * nMultSymbol));                   //PROBAR SI SE PUEDE SACAR EL PARSEINT
+        puntajeP += (cantSimbolosP * nMultSymbol);                  
     }
 
-    /* Reduccion de puntajeP debido a malas practicas */
+    /* Reduccion de puntaje debido a malas practicas */
     if ((cantMinusculasP > 0 || cantMayusculasP > 0) && cantSimbolosP === 0 && cantNumerosP === 0) { // Solo letras
-        puntajeP = parseInt(puntajeP - longitudP);
+        puntajeP -= longitudP;
         soloLetrasP = true;
     }
     if (cantMinusculasP === 0 && cantMayusculasP === 0 && cantSimbolosP === 0 && cantNumerosP > 0) { // Solo numeros
-        puntajeP = parseInt(puntajeP - longitudP);
+        puntajeP -= longitudP;
         soloNumerosP = true;
     }
     if (nConsecAlphaUC > 0) { // Existen letras mayusculas consecutivas
-        puntajeP = parseInt(puntajeP - (nConsecAlphaUC * nMultConsecAlphaUC));
+        puntajeP -= (nConsecAlphaUC * nMultConsecAlphaUC);
         
     }
     if (nConsecAlphaLC > 0) { // Existen letras minusculas consecutivas
-        puntajeP = parseInt(puntajeP - (nConsecAlphaLC * nMultConsecAlphaLC));
+        puntajeP -= (nConsecAlphaLC * nMultConsecAlphaLC);
         
     }
     if (nConsecNumber > 0) { // Existen numeros consecutivos
-        puntajeP = parseInt(puntajeP - (nConsecNumber * nMultConsecNumber));
+        puntajeP -= (nConsecNumber * nMultConsecNumber);
         
     }
     if (nSeqAlpha > 0) { // Existen secuencias de letras (3 caracteres o mas)
-        puntajeP = parseInt(puntajeP - (nSeqAlpha * nMultSeqAlpha));
+        puntajeP -= (nSeqAlpha * nMultSeqAlpha);
         secuenciaLetrasP = true;
     }
     if (nSeqNumber > 0) { // Existen secuencias de numeros (3 caracteres o mas)
-        puntajeP = parseInt(puntajeP - (nSeqNumber * nMultSeqNumber));
+        puntajeP -= (nSeqNumber * nMultSeqNumber);
         secuenciaNumerosP = true;
     }
     if (nSeqSymbol > 0) { // Existen secuencias de simbolos (3 caracteres o mas)
-        puntajeP = parseInt(puntajeP - (nSeqSymbol * nMultSeqSymbol));
+        puntajeP -= (nSeqSymbol * nMultSeqSymbol);
         secuenciaSimbolosP = true;
     }
 
@@ -349,4 +293,6 @@ function chkPass(pwd) {
     tieneSecuenciaSimbolos.valor = secuenciaSimbolosP;
     tieneSecuenciaLetras.valor = secuenciaLetrasP;
     tieneSecuenciaNumeros.valor = secuenciaNumerosP;
+
+    alert("Puntaje: "+puntajeP+", complejidad: "+complejidad);
 }
