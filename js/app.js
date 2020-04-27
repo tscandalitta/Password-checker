@@ -46,17 +46,17 @@ init();
 function completarTablas() {
     var tablaPuntosFavorBody = document.getElementById("tabla-puntos-favor-body");
     var tablaPuntosContraBody = document.getElementById("tabla-puntos-contra-body");
-    for(var i = 0; i < parametrosAFavor.length; i++){
+    for(var i = 0; i < parametrosAFavor.length; i++) {
         var parametro = parametrosAFavor[i];
-        completarFila(tablaPuntosFavorBody,parametro.id,parametro.descripcion);
+        completarFila(tablaPuntosFavorBody,parametro.getId(),parametro.getDescripcion());
     }
-    for(var i = 0; i < parametrosEnContra.length; i++){
+    for(var i = 0; i < parametrosEnContra.length; i++) {
         var parametro = parametrosEnContra[i];
-        completarFila(tablaPuntosContraBody,parametro.id,parametro.descripcion);
+        completarFila(tablaPuntosContraBody,parametro.getId(),parametro.getDescripcion());
     }
 }
 
-function completarFila(body, id, texto){
+function completarFila(body, id, texto) {
     var tr = document.createElement('tr');
     var td = document.createElement('td');
     td.innerHTML = texto;
