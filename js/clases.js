@@ -4,6 +4,18 @@ class Parametro {
         this.descripcion = descripcion;
         this.valor = valor;
     }
+
+    getId(){
+        return this.id;
+    }
+
+    getDescripcion(){
+        return this.descripcion;
+    }
+
+    getValor(){
+        return this.valor;
+    }
 }
 
 class ParametroEntero extends Parametro{
@@ -43,6 +55,30 @@ class ParametroBooleano extends Parametro{
         var colorIcono = "";
         if(this.valor == true){
             colorIcono = iconoRojo;    
+        }
+        return colorIcono;
+    }
+}
+
+class ParametroLongitud extends ParametroEntero{
+    getClaseIcono(){
+        var claseIcono = iconoPorDefecto;
+        if(this.valor > 0){
+            if(this.valor <= 12)
+            claseIcono = iconoCheck;
+            else 
+            claseIcono = iconoCheckDoble;    
+        }
+        return claseIcono;
+    }
+
+    getColorIcono(){
+        var colorIcono = "";
+        if(this.valor > 0){
+            if(this.valor <= 6)
+                colorIcono = iconoAmarillo;
+            else
+                colorIcono = iconoVerde;    
         }
         return colorIcono;
     }
