@@ -30,9 +30,8 @@ var parametrosAFavor = [longitud,cantMayusculas,cantMinusculas,cantNumeros,cantS
 var parametrosEnContra = [soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecuenciaNumeros, 
                             tieneSecuenciaSimbolos];
 
-$("#password-button").click(function(){
+$("#password-button").click(function() {
     checkPassword();
-    $("#alert-resultado").show(600);
 });
 
 /**
