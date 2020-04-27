@@ -9,8 +9,12 @@ var iconoVerde = "icono-verde";
 var iconoAmarillo = "icono-amarillo";
 var iconoRojo = "icono-rojo";
 
-var puntaje = new ParametroEntero("puntaje","Puntaje",0);
-var longitud = new ParametroEntero("longitud","Longitud",0);
+var alertSuccess = "alert alert-success";
+var alertDanger = "alert alert-danger";
+var alertWarning = "alert alert-warning";
+
+var puntaje = 0;
+var longitud = new ParametroLongitud("longitud","Longitud",0);
 var cantMayusculas = new ParametroEntero("cantMayusculas","Letras mayúsculas",0);
 var cantMinusculas = new ParametroEntero("cantMinusculas","Letras minúsculas",0);
 var cantNumeros = new ParametroEntero("cantNumeros","Números",0);
