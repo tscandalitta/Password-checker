@@ -69,16 +69,16 @@ function completarFila(body, id, texto) {
     body.appendChild(tr);
 }
 
-function actualizarTablas(){
-    for(var i = 0; i < parametrosAFavor.length; i++){
+function actualizarTablas() {
+    for(var i = 0; i < parametrosAFavor.length; i++) {
         actualizarAux(parametrosAFavor[i]);
     }
-    for(var i = 0; i < parametrosEnContra.length; i++){
+    for(var i = 0; i < parametrosEnContra.length; i++) {
         actualizarAux(parametrosEnContra[i]);
     }
 }
 
-function actualizarAux(parametro){
+function actualizarAux(parametro) {
     var tr = document.getElementById(parametro.id);
     var span = tr.lastChild.firstChild;
     span.className = parametro.getColorIcono();
@@ -86,7 +86,7 @@ function actualizarAux(parametro){
     icon.className = parametro.getClaseIcono();
 }
 
-function actualizarTablaPasswords(){
+function actualizarTablaPasswords() {
     var tablaPasswordsBody = document.getElementById("tablaPasswordsBody");
     var pwdArray = getPasswords();
         if(pwdArray !== null) {
@@ -123,7 +123,7 @@ String.prototype.strReverse = function () {
 	return newstring;
 }
 
-function setIcon(tr){
+function setIcon(tr) {
     var td = document.createElement('td');
     var span = document.createElement('span');
     var icon = document.createElement('i');
@@ -136,6 +136,49 @@ function setIcon(tr){
 function init(){
     actualizarTablaPasswords();
     completarTablas();
+}
+
+function mostrarResultado(){
+    var colorAlert = getColorAlert(puntaje);
+    var complejidad = getComplejidad(puntaje);
+    $("#alert-complejidad").text(complejidad);
+    $("#alert-puntaje").text(puntaje);
+    $("#titulo-alert").text(getTituloAlert(puntaje));
+    $("#alert-resultado").show(600);
+    $("#alert-resultado").removeClass().addClass(colorAlert);
+
+}
+
+function getTituloAlert(puntaje) {
+    if(puntaje <= 60)
+        return "Puedes hacerlo mejor!";
+    else
+        return "Bien hecho!";
+}
+function getColorAlert(puntaje) {
+    var color = alertDanger;
+    if(puntaje > 40) {
+        if(puntaje <= 60)
+            color = alertWarning;
+        else
+            color = alertSuccess;
+    }
+    return color;
+}
+
+function getComplejidad(puntaje) {
+    var complejidad = "muy insegura";
+    if(puntaje > 20) {
+        if(puntaje <= 40)
+            complejidad = "insegura";
+        else if(puntaje <= 60)
+           complejidad = "poco segura";
+        else if(puntaje <= 80)
+            complejidad = "segura";
+        else
+            complejidad = "muy segura";
+    }
+    return complejidad;
 }
 
 function checkPassword() {
