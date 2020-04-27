@@ -142,13 +142,12 @@ function checkPassword() {
         storePassword(password);
         actualizarTablaPasswords();
         actualizarTablas();
+        mostrarResultado();
     }
 }
 
 function chkPass(pwd) {
-	// Simultaneous variable declaration and value assignment aren't supported in IE apparently
-	// so I'm forced to assign the same value individually per var to support a crappy browser *sigh* 
-    
+
     var puntajeP = 0; longitudP = 0; cantMayusculasP = 0, cantMinusculasP = 0, cantNumerosP = 0,
         cantSimbolosP = 0;
     var soloLetrasP = false, soloNumerosP = false, secuenciaSimbolosP = false,
@@ -163,17 +162,16 @@ function chkPass(pwd) {
 	var secuenciaLetras = "abcdefghijklmnopqrstuvwxyz";
 	var secuenciaNumeros = "01234567890";
 	var secuenciaSimbolos = ")!@#$%^&*()";
-	var complejidad = "Muy débil";
 
     longitudP = pwd.length;
     puntajeP = longitudP * nMultLength;
-    var arrPwd = pwd.replace(/\s+/g, "").split(/\s*/);            //PRBAR SACAR EL REPLACE
+    var arrPwd = pwd.replace(/\s+/g, "").split(/\s*/);
     var arrPwdLen = arrPwd.length;
 
     /* Loop sobre la contraseña para buscar coincidencias de minúsculas, mayúsculas, numeros y simbolos */
     var nTmpAlphaUC = "", nTmpAlphaLC = "", nTmpNumber = "";
     for (var a = 0; a < arrPwdLen; a++) {
-        if (arrPwd[a].match(/[A-Z]/g)) {                        //PROBAR SI PUEDO SACAR EL /G
+        if (arrPwd[a].match(/[A-Z]/g)) {                        
             if (nTmpAlphaUC !== "") {
                 if ((nTmpAlphaUC + 1) == a) {
                     nConsecAlphaUC++;
@@ -181,7 +179,7 @@ function chkPass(pwd) {
             }
             nTmpAlphaUC = a;
             cantMayusculasP++;
-        } else if (arrPwd[a].match(/[a-z]/g)) {                        //PROBAR SI PUEDO SACAR EL /G
+        } else if (arrPwd[a].match(/[a-z]/g)) {                        
             if (nTmpAlphaLC !== "") {
                 if ((nTmpAlphaLC + 1) == a) {
                     nConsecAlphaLC++;
@@ -189,7 +187,7 @@ function chkPass(pwd) {
             }
             nTmpAlphaLC = a;
             cantMinusculasP++;
-        } else if (arrPwd[a].match(/[0-9]/g)) {                        //PROBAR SI PUEDO SACAR EL /G
+        } else if (arrPwd[a].match(/[0-9]/g)) {                        
             if (nTmpNumber !== "") {
                 if ((nTmpNumber + 1) == a) {
                     nConsecNumber++;
@@ -197,7 +195,7 @@ function chkPass(pwd) {
             }
             nTmpNumber = a;
             cantNumerosP++;
-        } else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) {                        //PROBAR SI PUEDO SACAR EL /G
+        } else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) {                        
             cantSimbolosP++;
         }
     }
@@ -276,13 +274,12 @@ function chkPass(pwd) {
         secuenciaSimbolosP = true;
     }
 
-    /* Determina la complejidad basada en el puntaje general */
     if (puntajeP > 100) 
         puntajeP = 100;
     else if (puntajeP < 0) 
         puntajeP = 0;
     
-    puntaje.valor = puntajeP;
+    puntaje = puntajeP;
     longitud.valor = longitudP;
     cantMayusculas.valor = cantMayusculasP;
     cantMinusculas.valor = cantMinusculasP;
@@ -293,6 +290,4 @@ function chkPass(pwd) {
     tieneSecuenciaSimbolos.valor = secuenciaSimbolosP;
     tieneSecuenciaLetras.valor = secuenciaLetrasP;
     tieneSecuenciaNumeros.valor = secuenciaNumerosP;
-
-    alert("Puntaje: "+puntajeP+", complejidad: "+complejidad);
 }
