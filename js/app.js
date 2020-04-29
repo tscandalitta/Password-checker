@@ -8,7 +8,7 @@ var iconoCheckDoble = "fas fa-check-double";
 var iconoVerde = "icono-verde";
 var iconoAmarillo = "icono-amarillo";
 var iconoRojo = "icono-rojo";
-
+var disabled = "disabled"
 var alertSuccess = "alert alert-success";
 var alertDanger = "alert alert-danger";
 var alertWarning = "alert alert-warning";
@@ -66,6 +66,7 @@ function completarFila(body, id, texto) {
     tr.appendChild(td);
     setIcon(tr);
     tr.setAttribute("id",id);
+    tr.className = disabled
     body.appendChild(tr);
 }
 
@@ -84,7 +85,10 @@ function actualizarAux(parametro) {
     span.className = parametro.getColorIcono();
     var icon = span.firstChild;
     icon.className = parametro.getClaseIcono();
+    tr.className = (icon.className == iconoPorDefecto) ? disabled : "";
 }
+
+
 
 function actualizarTablaPasswords() {
     var tablaPasswordsBody = document.getElementById("tablaPasswordsBody");
