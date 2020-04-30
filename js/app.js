@@ -141,14 +141,17 @@ function init(){
     completarTablas();
 }
 
-function mostrarResultado(){
-    var colorAlert = getColorAlert(puntaje);
-    var complejidad = getComplejidad(puntaje);
-    $("#alert-complejidad").text(complejidad);
-    $("#alert-puntaje").text(puntaje);
-    $("#titulo-alert").text(getTituloAlert(puntaje));
-    $("#alert-resultado").show(600);
-    $("#alert-resultado").removeClass().addClass(colorAlert);
+function mostrarResultado(password){
+    if(password != "") {
+        var colorAlert = getColorAlert(puntaje);
+        var complejidad = getComplejidad(puntaje);
+        $("#alert-complejidad").text(complejidad);
+        $("#alert-puntaje").text(puntaje);
+        $("#titulo-alert").text(getTituloAlert(puntaje));
+        $("#alert-resultado").show(500);
+        $("#alert-resultado").removeClass().addClass(colorAlert);
+    } else
+        $("#alert-resultado").hide(500);
 
 }
 
@@ -187,7 +190,7 @@ function getComplejidad(puntaje) {
 function checkPassword() {
     var password = $("#password-input").val();
     chkPass(password);
-    mostrarResultado();
+    mostrarResultado(password);
     actualizarTablas();
 }
 
