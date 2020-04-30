@@ -186,13 +186,9 @@ function getComplejidad(puntaje) {
 
 function checkPassword() {
     var password = $("#password-input").val();
-    if(password != "") {
-        chkPass(password);
-        storePassword(password);
-        actualizarTablaPasswords();
-        actualizarTablas();
-        mostrarResultado();
-    }
+    chkPass(password);
+    mostrarResultado();
+    actualizarTablas();
 }
 
 function chkPass(pwd) {
@@ -201,133 +197,136 @@ function chkPass(pwd) {
         cantSimbolosP = 0;
     var soloLetrasP = false, soloNumerosP = false, secuenciaSimbolosP = false,
         secuenciaLetrasP = false, secuenciaNumerosP = false;
-	var	nConsecAlphaUC = 0, nConsecAlphaLC = 0,	nConsecNumber = 0,	nSeqAlpha = 0, nSeqNumber = 0,
-        nSeqSymbol = 0;
-    var nMultConsecAlphaUC = 2,	nMultConsecAlphaLC = 2,	nMultConsecNumber = 2;
-	var nMultSeqAlpha = 3, nMultSeqNumber = 3, nMultSeqSymbol = 3;
-	var nMultLength = nMultNumber = 4;
-    var nMultSymbol = 6;
 
-	var secuenciaLetras = "abcdefghijklmnopqrstuvwxyz";
-	var secuenciaNumeros = "01234567890";
-	var secuenciaSimbolos = ")!@#$%^&*()";
+    if(pwd != ""){
+        var	nConsecAlphaUC = 0, nConsecAlphaLC = 0,	nConsecNumber = 0,	nSeqAlpha = 0, nSeqNumber = 0,
+            nSeqSymbol = 0;
+        var nMultConsecAlphaUC = 2,	nMultConsecAlphaLC = 2,	nMultConsecNumber = 2;
+        var nMultSeqAlpha = 3, nMultSeqNumber = 3, nMultSeqSymbol = 3;
+        var nMultLength = nMultNumber = 4;
+        var nMultSymbol = 6;
 
-    longitudP = pwd.length;
-    puntajeP = longitudP * nMultLength;
-    var arrPwd = pwd.replace(/\s+/g, "").split(/\s*/);
-    var arrPwdLen = arrPwd.length;
+        var secuenciaLetras = "abcdefghijklmnopqrstuvwxyz";
+        var secuenciaNumeros = "01234567890";
+        var secuenciaSimbolos = ")!@#$%^&*()";
 
-    /* Loop sobre la contraseña para buscar coincidencias de minúsculas, mayúsculas, numeros y simbolos */
-    var nTmpAlphaUC = "", nTmpAlphaLC = "", nTmpNumber = "";
-    for (var a = 0; a < arrPwdLen; a++) {
-        if (arrPwd[a].match(/[A-Z]/g)) {                        
-            if (nTmpAlphaUC !== "") {
-                if ((nTmpAlphaUC + 1) == a) {
-                    nConsecAlphaUC++;
+        longitudP = pwd.length;
+        puntajeP = longitudP * nMultLength;
+        var arrPwd = pwd.replace(/\s+/g, "").split(/\s*/);
+        var arrPwdLen = arrPwd.length;
+
+        /* Loop sobre la contraseña para buscar coincidencias de minúsculas, mayúsculas, numeros y simbolos */
+        var nTmpAlphaUC = "", nTmpAlphaLC = "", nTmpNumber = "";
+        for (var a = 0; a < arrPwdLen; a++) {
+            if (arrPwd[a].match(/[A-Z]/g)) {                        
+                if (nTmpAlphaUC !== "") {
+                    if ((nTmpAlphaUC + 1) == a) {
+                        nConsecAlphaUC++;
+                    }
                 }
-            }
-            nTmpAlphaUC = a;
-            cantMayusculasP++;
-        } else if (arrPwd[a].match(/[a-z]/g)) {                        
-            if (nTmpAlphaLC !== "") {
-                if ((nTmpAlphaLC + 1) == a) {
-                    nConsecAlphaLC++;
+                nTmpAlphaUC = a;
+                cantMayusculasP++;
+            } else if (arrPwd[a].match(/[a-z]/g)) {                        
+                if (nTmpAlphaLC !== "") {
+                    if ((nTmpAlphaLC + 1) == a) {
+                        nConsecAlphaLC++;
+                    }
                 }
-            }
-            nTmpAlphaLC = a;
-            cantMinusculasP++;
-        } else if (arrPwd[a].match(/[0-9]/g)) {                        
-            if (nTmpNumber !== "") {
-                if ((nTmpNumber + 1) == a) {
-                    nConsecNumber++;
+                nTmpAlphaLC = a;
+                cantMinusculasP++;
+            } else if (arrPwd[a].match(/[0-9]/g)) {                        
+                if (nTmpNumber !== "") {
+                    if ((nTmpNumber + 1) == a) {
+                        nConsecNumber++;
+                    }
                 }
+                nTmpNumber = a;
+                cantNumerosP++;
+            } else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) {                        
+                cantSimbolosP++;
             }
-            nTmpNumber = a;
-            cantNumerosP++;
-        } else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) {                        
-            cantSimbolosP++;
         }
+
+        /* Busca secuencias de letras (hacia adelante y hacia atras) */
+        var pwdLowerCase = pwd.toLowerCase();
+        for (var s = 0; s < 23; s++) {
+            var sFwd = secuenciaLetras.substring(s, s+3);                  
+            var sRev = sFwd.strReverse();
+            if (pwdLowerCase.indexOf(sFwd) != -1 || pwdLowerCase.indexOf(sRev) != -1) {
+                nSeqAlpha++;
+            }
+        }
+        /* Busca secuencias de numeros (hacia adelante y hacia atras) */
+        for (var s = 0; s < 8; s++) {
+            var sFwd = secuenciaNumeros.substring(s, s+3);                   
+            var sRev = sFwd.strReverse();
+            if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
+                nSeqNumber++;
+            }
+        }
+        /* Busca secuencias de simbolos (hacia adelante y hacia atras) */
+        for (var s = 0; s < 8; s++) {
+            var sFwd = secuenciaSimbolos.substring(s, s+3);                   
+            var sRev = sFwd.strReverse();
+            if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
+                nSeqSymbol++;
+            }
+        }
+
+        /* Asignacion de puntajes */
+        if (cantMayusculasP > 0 && cantMayusculasP < longitudP) {
+            puntajeP += ((longitudP - cantMayusculasP) * 2);                  
+        }
+        if (cantMinusculasP > 0 && cantMinusculasP < longitudP) {
+            puntajeP += ((longitudP - cantMinusculasP) * 2);                  
+        }
+        if (cantNumerosP > 0 && cantNumerosP < longitudP) {
+            puntajeP += (cantNumerosP * nMultNumber);                  
+        }
+        if (cantSimbolosP > 0) {
+            puntajeP += (cantSimbolosP * nMultSymbol);                  
+        }
+
+        /* Reduccion de puntaje debido a malas practicas */
+        if ((cantMinusculasP > 0 || cantMayusculasP > 0) && cantSimbolosP === 0 && cantNumerosP === 0) { // Solo letras
+            puntajeP -= longitudP;
+            soloLetrasP = true;
+        }
+        if (cantMinusculasP === 0 && cantMayusculasP === 0 && cantSimbolosP === 0 && cantNumerosP > 0) { // Solo numeros
+            puntajeP -= longitudP;
+            soloNumerosP = true;
+        }
+        if (nConsecAlphaUC > 0) { // Existen letras mayusculas consecutivas
+            puntajeP -= (nConsecAlphaUC * nMultConsecAlphaUC);
+            
+        }
+        if (nConsecAlphaLC > 0) { // Existen letras minusculas consecutivas
+            puntajeP -= (nConsecAlphaLC * nMultConsecAlphaLC);
+            
+        }
+        if (nConsecNumber > 0) { // Existen numeros consecutivos
+            puntajeP -= (nConsecNumber * nMultConsecNumber);
+            
+        }
+        if (nSeqAlpha > 0) { // Existen secuencias de letras (3 caracteres o mas)
+            puntajeP -= (nSeqAlpha * nMultSeqAlpha);
+            secuenciaLetrasP = true;
+        }
+        if (nSeqNumber > 0) { // Existen secuencias de numeros (3 caracteres o mas)
+            puntajeP -= (nSeqNumber * nMultSeqNumber);
+            secuenciaNumerosP = true;
+        }
+        if (nSeqSymbol > 0) { // Existen secuencias de simbolos (3 caracteres o mas)
+            puntajeP -= (nSeqSymbol * nMultSeqSymbol);
+            secuenciaSimbolosP = true;
+        }
+
+        if (puntajeP > 100) 
+            puntajeP = 100;
+        else if (puntajeP < 0) 
+            puntajeP = 0;
     }
 
-    /* Busca secuencias de letras (hacia adelante y hacia atras) */
-    var pwdLowerCase = pwd.toLowerCase();
-    for (var s = 0; s < 23; s++) {
-        var sFwd = secuenciaLetras.substring(s, s+3);                  
-        var sRev = sFwd.strReverse();
-        if (pwdLowerCase.indexOf(sFwd) != -1 || pwdLowerCase.indexOf(sRev) != -1) {
-            nSeqAlpha++;
-        }
-    }
-    /* Busca secuencias de numeros (hacia adelante y hacia atras) */
-    for (var s = 0; s < 8; s++) {
-        var sFwd = secuenciaNumeros.substring(s, s+3);                   
-        var sRev = sFwd.strReverse();
-        if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
-            nSeqNumber++;
-        }
-    }
-    /* Busca secuencias de simbolos (hacia adelante y hacia atras) */
-    for (var s = 0; s < 8; s++) {
-        var sFwd = secuenciaSimbolos.substring(s, s+3);                   
-        var sRev = sFwd.strReverse();
-        if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
-            nSeqSymbol++;
-        }
-    }
-
-    /* Asignacion de puntajes */
-    if (cantMayusculasP > 0 && cantMayusculasP < longitudP) {
-        puntajeP += ((longitudP - cantMayusculasP) * 2);                  
-    }
-    if (cantMinusculasP > 0 && cantMinusculasP < longitudP) {
-        puntajeP += ((longitudP - cantMinusculasP) * 2);                  
-    }
-    if (cantNumerosP > 0 && cantNumerosP < longitudP) {
-        puntajeP += (cantNumerosP * nMultNumber);                  
-    }
-    if (cantSimbolosP > 0) {
-        puntajeP += (cantSimbolosP * nMultSymbol);                  
-    }
-
-    /* Reduccion de puntaje debido a malas practicas */
-    if ((cantMinusculasP > 0 || cantMayusculasP > 0) && cantSimbolosP === 0 && cantNumerosP === 0) { // Solo letras
-        puntajeP -= longitudP;
-        soloLetrasP = true;
-    }
-    if (cantMinusculasP === 0 && cantMayusculasP === 0 && cantSimbolosP === 0 && cantNumerosP > 0) { // Solo numeros
-        puntajeP -= longitudP;
-        soloNumerosP = true;
-    }
-    if (nConsecAlphaUC > 0) { // Existen letras mayusculas consecutivas
-        puntajeP -= (nConsecAlphaUC * nMultConsecAlphaUC);
-        
-    }
-    if (nConsecAlphaLC > 0) { // Existen letras minusculas consecutivas
-        puntajeP -= (nConsecAlphaLC * nMultConsecAlphaLC);
-        
-    }
-    if (nConsecNumber > 0) { // Existen numeros consecutivos
-        puntajeP -= (nConsecNumber * nMultConsecNumber);
-        
-    }
-    if (nSeqAlpha > 0) { // Existen secuencias de letras (3 caracteres o mas)
-        puntajeP -= (nSeqAlpha * nMultSeqAlpha);
-        secuenciaLetrasP = true;
-    }
-    if (nSeqNumber > 0) { // Existen secuencias de numeros (3 caracteres o mas)
-        puntajeP -= (nSeqNumber * nMultSeqNumber);
-        secuenciaNumerosP = true;
-    }
-    if (nSeqSymbol > 0) { // Existen secuencias de simbolos (3 caracteres o mas)
-        puntajeP -= (nSeqSymbol * nMultSeqSymbol);
-        secuenciaSimbolosP = true;
-    }
-
-    if (puntajeP > 100) 
-        puntajeP = 100;
-    else if (puntajeP < 0) 
-        puntajeP = 0;
-    
     puntaje = puntajeP;
     longitud.valor = longitudP;
     cantMayusculas.valor = cantMayusculasP;
