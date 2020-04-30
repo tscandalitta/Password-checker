@@ -89,6 +89,10 @@ body{
     border: 1px solid var(--gris);
 }
 
+.table-dark{
+    transition: 0.3s ease all;
+}
+
 .icono-gris{
     color: var(--gris);
 }
