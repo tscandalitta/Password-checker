@@ -22,23 +22,27 @@
         <div class="col-10">
           <h1 class="title">¿Cuán segura es mi contraseña?</h1>
         </div>
+        <div class="col-1">
+          <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="darkSwitch"/>
+            <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+          </div>
+        </div>
       </div>
-      
-      
     </div>
     
     <div class="container-fluid">
         <div class="row pwd-row justify-content-end p-1">
           <div class="col-10">
-            <input type="password" class="password" id="password-input" placeholder="Contraseña">
+            <input type="password" class="password" id="password-input" placeholder="Ingresa tu contraseña">
           </div>
           <div class="col-1">
-            <i class="far fa-eye pwd-icon" id="password-icon" onclick="togglePassword()"></i>
+            <i class="far fa-eye pwd-icon" id="password-icon"></i>
           </div>
         </div>
         <div class="row p-3">
           <div class="col text-center">
-            <button type="button" class="btn btn-principal btn-lg" id="password-button">Verificar</button>
+            <button type="button" class="btn btn-primary btn-lg" id="password-button">Almacenar</button>
           </div>
         </div>
     </div>
@@ -97,13 +101,14 @@
             <p>Hecho por <a href="https://github.com/tscandalitta">Tomás Scandalitta</a>.</p>
           </div>
           <div class="col-auto">
-            <p>Basado en <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>.</p>
+            <p>Powered by <a href="https://getbootstrap.com" rel="nofollow">Bootstrap</a>.</p>
           </div>
         </div>
       </footer>
     </div>
     <!-- JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <script src="js/dark-mode-switch.min.js"></script>
     <script src="js/clases.js"></script>
     <script src="js/store.js"></script>
     <script src="js/app.js"></script>

@@ -30,18 +30,17 @@ var parametrosAFavor = [longitud,cantMayusculas,cantMinusculas,cantNumeros,cantS
 var parametrosEnContra = [soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecuenciaNumeros, 
                             tieneSecuenciaSimbolos];
 
+
+document.getElementById("password-input").addEventListener('input',checkPassword);
+
 $("#password-button").click(function() {
-    checkPassword();
+    var password = $("#password-input").val();
+    storePassword(password);
+    actualizarTablaPasswords();
 });
 
-/**
- * Permite simular un click en el boton de validacion al presionar la tecla
- * Enter sobre el campo de entrada de la contraseña.
- */
-document.querySelector("#password-input").addEventListener("keyup", event => {
-    if(event.key !== "Enter") return;
-    document.querySelector("#password-button").click();
-    event.preventDefault();
+$("#password-icon").click(function() {
+    togglePassword();
 });
 
 init();
