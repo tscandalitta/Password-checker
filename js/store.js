@@ -1,6 +1,6 @@
 
-var keylocalStorage = "passwords";
-var passwordsAlmacenadas = 5;
+const keylocalStorage = "passwords";
+const passwordsAlmacenadas = 5;
 
 /**
  * Almancena la contraseña en el localStorage del navegador
