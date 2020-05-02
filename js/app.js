@@ -24,13 +24,15 @@ var tieneSecuenciaLetras = new ParametroBooleano("tieneSecuenciaLetras","Secuenc
 var tieneSecuenciaNumeros = new ParametroBooleano("tieneSecuenciaNumeros","Secuencia de números",false);
 var tieneSecuenciaSimbolos = new ParametroBooleano("tieneSecuenciaSimbolos","Secuencia de símbolos",false);
 
-var parametrosAFavor = [longitud,cantMayusculas,cantMinusculas,cantNumeros,cantSimbolos];
+var parametrosAFavor = [
+    longitud,cantMayusculas,cantMinusculas,cantNumeros,cantSimbolos
+    ];
 
-var parametrosEnContra = [soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecuenciaNumeros, 
-                            tieneSecuenciaSimbolos];
+var parametrosEnContra = [
+    soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecuenciaNumeros, 
+    tieneSecuenciaSimbolos
+    ];
 
-
-/** Agrego listeners **/
 document.getElementById("password-input").addEventListener('input',checkPassword);
 
 $("#password-button").click(function() {
@@ -67,6 +69,11 @@ function completarTablas() {
     
 }
 
+function actualizarTablas() {
+    actualizarvalores(parametrosAFavor);
+    actualizarvalores(parametrosEnContra);
+}
+
 function checkPassword() {
     var password = $("#password-input").val();
     chkPass(password);
@@ -74,13 +81,20 @@ function checkPassword() {
     actualizarTablas();
 }
 
-/************************************* MANEJO DE TABLAS *********************************/
+function init(){
+    actualizarTablaPasswords();
+    completarTablas();
+}
+
+
+/******************************* MANEJO DE TABLAS ****************************/
 function completarTabla(parametros,body){
     for(var i = 0; i < parametros.length; i++) {
         var parametro = parametros[i];
         completarFila(body,parametro.getId(),parametro.getDescripcion());
     }
 }
+
 function completarFila(body, id, texto) {
     var tr = document.createElement('tr');
     var td1 = document.createElement('td');
@@ -102,22 +116,17 @@ function setIcon(td) {
     td.appendChild(span);
 }
 
-function actualizarTablas() {
-    for(var i = 0; i < parametrosAFavor.length; i++) {
-        actualizarAux(parametrosAFavor[i]);
+function actualizarValores(parametros) {
+    for(var i = 0; i < parametros.length; i++) {
+        var parametro = parametros[i];
+        var tr = document.getElementById(parametro.id);
+        var span = tr.lastChild.firstChild;
+        span.className = parametro.getColorIcono();
+        var icon = span.firstChild;
+        icon.className = parametro.getClaseIcono();
+        tr.className = (icon.className == iconoPorDefecto) ? disabled : "";
     }
-    for(var i = 0; i < parametrosEnContra.length; i++) {
-        actualizarAux(parametrosEnContra[i]);
-    }
-}
-
-function actualizarAux(parametro) {
-    var tr = document.getElementById(parametro.id);
-    var span = tr.lastChild.firstChild;
-    span.className = parametro.getColorIcono();
-    var icon = span.firstChild;
-    icon.className = parametro.getClaseIcono();
-    tr.className = (icon.className == iconoPorDefecto) ? disabled : "";
+    
 }
 
 function actualizarTablaPasswords() {
@@ -136,15 +145,10 @@ function actualizarTablaPasswords() {
             }
         }
 }
+/*****************************************************************************/
 
 
-
-function init(){
-    actualizarTablaPasswords();
-    completarTablas();
-}
-
-/************************************* ALERT *********************************/
+/*********************************** ALERT ***********************************/
 function mostrarResultado(password,puntaje){
     if(password != "") {
         var colorAlert = getColorAlert(puntaje);
@@ -165,6 +169,7 @@ function getTituloAlert(puntaje) {
     else
         return "Bien hecho!";
 }
+
 function getColorAlert(puntaje) {
     var color = alertDanger;
     if(puntaje > 40) {
@@ -190,11 +195,10 @@ function getComplejidad(puntaje) {
     }
     return complejidad;
 }
-/************************************* ALERT *********************************/
+/*****************************************************************************/
 
 
-
-/************************************* CHECK PASSWORD *********************************/
+/******************************* CHECK PASSWORD ******************************/
 String.prototype.strReverse = function () {
 	var newstring = "";
 	for (var s = 0; s < this.length; s++) {
