@@ -1,4 +1,3 @@
-
 var iconoPasswordOculta = "far fa-eye-slash pwd-icon";
 var iconoPasswordVisible = "far fa-eye pwd-icon";
 var iconoPorDefecto = "fas fa-minus";
@@ -31,12 +30,15 @@ var parametrosEnContra = [soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecue
                             tieneSecuenciaSimbolos];
 
 
+/** Agrego listeners **/
 document.getElementById("password-input").addEventListener('input',checkPassword);
 
 $("#password-button").click(function() {
     var password = $("#password-input").val();
-    storePassword(password);
-    actualizarTablaPasswords();
+    if(password != "") {
+        storePassword(password);
+        actualizarTablaPasswords();
+    }
 });
 
 $("#password-icon").click(function() {
@@ -45,28 +47,59 @@ $("#password-icon").click(function() {
 
 init();
 
-function completarTablas() {
-    var tablaPuntosFavorBody = document.getElementById("tabla-puntos-favor-body");
-    var tablaPuntosContraBody = document.getElementById("tabla-puntos-contra-body");
-    for(var i = 0; i < parametrosAFavor.length; i++) {
-        var parametro = parametrosAFavor[i];
-        completarFila(tablaPuntosFavorBody,parametro.getId(),parametro.getDescripcion());
-    }
-    for(var i = 0; i < parametrosEnContra.length; i++) {
-        var parametro = parametrosEnContra[i];
-        completarFila(tablaPuntosContraBody,parametro.getId(),parametro.getDescripcion());
+function togglePassword() {
+    var password = document.getElementById("password-input");
+    var icon = document.getElementById("password-icon");
+    if (password.type == "password") {
+        password.type = "text";
+        icon.className = iconoPasswordOculta;
+    } else {
+        password.type = "password";
+        icon.className = iconoPasswordVisible;
     }
 }
 
+function completarTablas() {
+    var tablaPuntosFavorBody = document.getElementById("tabla-puntos-favor-body");
+    var tablaPuntosContraBody = document.getElementById("tabla-puntos-contra-body");
+    completarTabla(parametrosAFavor,tablaPuntosFavorBody);
+    completarTabla(parametrosEnContra,tablaPuntosContraBody);
+    
+}
+
+function checkPassword() {
+    var password = $("#password-input").val();
+    chkPass(password);
+    mostrarResultado(password,puntaje);
+    actualizarTablas();
+}
+
+/************************************* MANEJO DE TABLAS *********************************/
+function completarTabla(parametros,body){
+    for(var i = 0; i < parametros.length; i++) {
+        var parametro = parametros[i];
+        completarFila(body,parametro.getId(),parametro.getDescripcion());
+    }
+}
 function completarFila(body, id, texto) {
     var tr = document.createElement('tr');
-    var td = document.createElement('td');
-    td.innerHTML = texto;
-    tr.appendChild(td);
-    setIcon(tr);
+    var td1 = document.createElement('td');
+    td1.innerHTML = texto;
+    tr.appendChild(td1);
+    var td2 = document.createElement('td');
+    setIcon(td2);
+    tr.appendChild(td2);
     tr.setAttribute("id",id);
     tr.className = disabled
     body.appendChild(tr);
+}
+
+function setIcon(td) {
+    var span = document.createElement('span');
+    var icon = document.createElement('i');
+    icon.className = iconoPorDefecto;
+    span.appendChild(icon);
+    td.appendChild(span);
 }
 
 function actualizarTablas() {
@@ -87,8 +120,6 @@ function actualizarAux(parametro) {
     tr.className = (icon.className == iconoPorDefecto) ? disabled : "";
 }
 
-
-
 function actualizarTablaPasswords() {
     var tablaPasswordsBody = document.getElementById("tablaPasswordsBody");
     var pwdArray = getPasswords();
@@ -106,42 +137,15 @@ function actualizarTablaPasswords() {
         }
 }
 
-function togglePassword() {
-    var password = document.getElementById("password-input");
-    var icon = document.getElementById("password-icon");
-    if (password.type == "password") {
-        password.type = "text";
-        icon.className = iconoPasswordOculta;
-    } else {
-        password.type = "password";
-        icon.className = iconoPasswordVisible;
-    }
-}
 
-String.prototype.strReverse = function () {
-	var newstring = "";
-	for (var s = 0; s < this.length; s++) {
-		newstring = this.charAt(s) + newstring;
-	}
-	return newstring;
-}
-
-function setIcon(tr) {
-    var td = document.createElement('td');
-    var span = document.createElement('span');
-    var icon = document.createElement('i');
-    icon.className = iconoPorDefecto;
-    span.appendChild(icon);
-    td.appendChild(span);
-    tr.appendChild(td);
-}
 
 function init(){
     actualizarTablaPasswords();
     completarTablas();
 }
 
-function mostrarResultado(password){
+/************************************* ALERT *********************************/
+function mostrarResultado(password,puntaje){
     if(password != "") {
         var colorAlert = getColorAlert(puntaje);
         var complejidad = getComplejidad(puntaje);
@@ -186,12 +190,17 @@ function getComplejidad(puntaje) {
     }
     return complejidad;
 }
+/************************************* ALERT *********************************/
 
-function checkPassword() {
-    var password = $("#password-input").val();
-    chkPass(password);
-    mostrarResultado(password);
-    actualizarTablas();
+
+
+/************************************* CHECK PASSWORD *********************************/
+String.prototype.strReverse = function () {
+	var newstring = "";
+	for (var s = 0; s < this.length; s++) {
+		newstring = this.charAt(s) + newstring;
+	}
+	return newstring;
 }
 
 function chkPass(pwd) {
@@ -202,9 +211,9 @@ function chkPass(pwd) {
         secuenciaLetrasP = false, secuenciaNumerosP = false;
 
     if(pwd != ""){
-        var	nConsecAlphaUC = 0, nConsecAlphaLC = 0,	nConsecNumber = 0,	nSeqAlpha = 0, nSeqNumber = 0,
+        var	nConsecAlpha = 0, nConsecNumber = 0,	nSeqAlpha = 0, nSeqNumber = 0,
             nSeqSymbol = 0;
-        var nMultConsecAlphaUC = 2,	nMultConsecAlphaLC = 2,	nMultConsecNumber = 2;
+        var nMultConsecAlpha = 2, nMultConsecNumber = 2;
         var nMultSeqAlpha = 3, nMultSeqNumber = 3, nMultSeqSymbol = 3;
         var nMultLength = nMultNumber = 4;
         var nMultSymbol = 6;
@@ -224,7 +233,7 @@ function chkPass(pwd) {
             if (arrPwd[a].match(/[A-Z]/g)) {                        
                 if (nTmpAlphaUC !== "") {
                     if ((nTmpAlphaUC + 1) == a) {
-                        nConsecAlphaUC++;
+                        nConsecAlpha++;
                     }
                 }
                 nTmpAlphaUC = a;
@@ -232,7 +241,7 @@ function chkPass(pwd) {
             } else if (arrPwd[a].match(/[a-z]/g)) {                        
                 if (nTmpAlphaLC !== "") {
                     if ((nTmpAlphaLC + 1) == a) {
-                        nConsecAlphaLC++;
+                        nConsecAlpha++;
                     }
                 }
                 nTmpAlphaLC = a;
@@ -299,12 +308,8 @@ function chkPass(pwd) {
             puntajeP -= longitudP;
             soloNumerosP = true;
         }
-        if (nConsecAlphaUC > 0) { // Existen letras mayusculas consecutivas
-            puntajeP -= (nConsecAlphaUC * nMultConsecAlphaUC);
-            
-        }
-        if (nConsecAlphaLC > 0) { // Existen letras minusculas consecutivas
-            puntajeP -= (nConsecAlphaLC * nMultConsecAlphaLC);
+        if (nConsecAlpha > 0) { // Existen letras consecutivas
+            puntajeP -= (nConsecAlpha * nMultConsecAlpha);
             
         }
         if (nConsecNumber > 0) { // Existen numeros consecutivos
