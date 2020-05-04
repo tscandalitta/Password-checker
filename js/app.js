@@ -70,8 +70,8 @@ function completarTablas() {
 }
 
 function actualizarTablas() {
-    actualizarvalores(parametrosAFavor);
-    actualizarvalores(parametrosEnContra);
+    actualizarValores(parametrosAFavor);
+    actualizarValores(parametrosEnContra);
 }
 
 function checkPassword() {
