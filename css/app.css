@@ -91,8 +91,6 @@ body{
     border: 1px solid var(--gris);
 }
 
-
-
 .td-align-right {
     text-align: right;
 }
@@ -130,7 +128,8 @@ body{
     color: #eee;
 }
   
-[data-theme="dark"] .table, [data-theme="dark"] .card, [data-theme="dark"] hr {
+[data-theme="dark"] .table, [data-theme="dark"] .card, 
+[data-theme="dark"] hr, [data-theme="dark"] .list-group-item {
     border-color: var(--borde-tabla-oscuro);
 }
   
