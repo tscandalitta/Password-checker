@@ -221,11 +221,11 @@ function chkPass(pwd) {
     if (pwd != "") {
         var nConsecAlpha = 0,
             nConsecNumber = 0,
+            nConsecSymbol = 0,
             nSeqAlpha = 0,
             nSeqNumber = 0,
             nSeqSymbol = 0;
-        var nMultConsecAlpha = 2,
-            nMultConsecNumber = 2;
+        var nMultConsecChar = 2;
         var nMultSeqAlpha = 3,
             nMultSeqNumber = 3,
             nMultSeqSymbol = 3;
@@ -244,7 +244,8 @@ function chkPass(pwd) {
         /* Loop sobre la contraseña para buscar coincidencias de minúsculas, mayúsculas, numeros y simbolos */
         var nTmpAlphaUC = "",
             nTmpAlphaLC = "",
-            nTmpNumber = "";
+            nTmpNumber = "",
+            nTmpSymbol = "";
         for (var a = 0; a < arrPwdLen; a++) {
             if (arrPwd[a].match(/[A-Z]/g)) {
                 if (nTmpAlphaUC !== "") {
@@ -271,6 +272,12 @@ function chkPass(pwd) {
                 nTmpNumber = a;
                 cantNumerosP++;
             } else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) {
+                if (nTmpSymbol !== "") {
+                    if ((nTmpSymbol + 1) == a) {
+                        nConsecSymbol++;
+                    }
+                }
+                nTmpSymbol = a;
                 cantSimbolosP++;
             }
         }
@@ -324,14 +331,9 @@ function chkPass(pwd) {
             puntajeP -= longitudP;
             soloNumerosP = true;
         }
-        if (nConsecAlpha > 0) { // Existen letras consecutivas
-            puntajeP -= (nConsecAlpha * nMultConsecAlpha);
 
-        }
-        if (nConsecNumber > 0) { // Existen numeros consecutivos
-            puntajeP -= (nConsecNumber * nMultConsecNumber);
-
-        }
+        puntajeP -= (nConsecAlpha + nConsecNumber + nConsecSymbol) * nMultConsecChar; // Hay caracteres consecutivos
+        
         if (nSeqAlpha > 0) { // Existen secuencias de letras (3 caracteres o mas)
             puntajeP -= (nSeqAlpha * nMultSeqAlpha);
             secuenciaLetrasP = true;
