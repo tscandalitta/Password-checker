@@ -7,43 +7,43 @@ var iconoCheckDoble = "fas fa-check-double";
 var iconoVerde = "icono-verde";
 var iconoAmarillo = "icono-amarillo";
 var iconoRojo = "icono-rojo";
-var disabled = "disabled"
+var disabled = "disabled";
 var alertSuccess = "alert alert-success";
 var alertDanger = "alert alert-danger";
 var alertWarning = "alert alert-warning";
 
 var puntaje = 0;
-var longitud = new ParametroLongitud("longitud","Longitud",0);
-var cantMayusculas = new ParametroEntero("cantMayusculas","Letras mayúsculas",0);
-var cantMinusculas = new ParametroEntero("cantMinusculas","Letras minúsculas",0);
-var cantNumeros = new ParametroEntero("cantNumeros","Números",0);
-var cantSimbolos = new ParametroEntero("cantSimbolos","Símbolos",0);
-var soloLetras = new ParametroBooleano("soloLetras","Solo letras",false);
-var soloNumeros = new ParametroBooleano("soloNumeros","Solo números",false);
-var tieneSecuenciaLetras = new ParametroBooleano("tieneSecuenciaLetras","Secuencia de letras",false);
-var tieneSecuenciaNumeros = new ParametroBooleano("tieneSecuenciaNumeros","Secuencia de números",false);
-var tieneSecuenciaSimbolos = new ParametroBooleano("tieneSecuenciaSimbolos","Secuencia de símbolos",false);
+var longitud = new ParametroLongitud("longitud", "Longitud", 0);
+var cantMayusculas = new ParametroEntero("cantMayusculas", "Letras mayúsculas", 0);
+var cantMinusculas = new ParametroEntero("cantMinusculas", "Letras minúsculas", 0);
+var cantNumeros = new ParametroEntero("cantNumeros", "Números", 0);
+var cantSimbolos = new ParametroEntero("cantSimbolos", "Símbolos", 0);
+var soloLetras = new ParametroBooleano("soloLetras", "Solo letras", false);
+var soloNumeros = new ParametroBooleano("soloNumeros", "Solo números", false);
+var tieneSecuenciaLetras = new ParametroBooleano("tieneSecuenciaLetras", "Secuencia de letras", false);
+var tieneSecuenciaNumeros = new ParametroBooleano("tieneSecuenciaNumeros", "Secuencia de números", false);
+var tieneSecuenciaSimbolos = new ParametroBooleano("tieneSecuenciaSimbolos", "Secuencia de símbolos", false);
 
 var parametrosAFavor = [
-    longitud,cantMayusculas,cantMinusculas,cantNumeros,cantSimbolos
-    ];
+    longitud, cantMayusculas, cantMinusculas, cantNumeros, cantSimbolos
+];
 
 var parametrosEnContra = [
-    soloLetras,soloNumeros,tieneSecuenciaLetras,tieneSecuenciaNumeros, 
+    soloLetras, soloNumeros, tieneSecuenciaLetras, tieneSecuenciaNumeros,
     tieneSecuenciaSimbolos
-    ];
+];
 
-document.getElementById("password-input").addEventListener('input',checkPassword);
+document.getElementById("password-input").addEventListener("input", checkPassword);
 
-$("#password-button").click(function() {
+$("#password-button").click(function () {
     var password = $("#password-input").val();
-    if(password != "") {
+    if (password != "") {
         storePassword(password);
         actualizarTablaPasswords();
     }
 });
 
-$("#password-icon").click(function() {
+$("#password-icon").click(function () {
     togglePassword();
 });
 
@@ -64,9 +64,9 @@ function togglePassword() {
 function completarTablas() {
     var tablaPuntosFavorBody = document.getElementById("tabla-puntos-favor-body");
     var tablaPuntosContraBody = document.getElementById("tabla-puntos-contra-body");
-    completarTabla(parametrosAFavor,tablaPuntosFavorBody);
-    completarTabla(parametrosEnContra,tablaPuntosContraBody);
-    
+    completarTabla(parametrosAFavor, tablaPuntosFavorBody);
+    completarTabla(parametrosEnContra, tablaPuntosContraBody);
+
 }
 
 function actualizarTablas() {
@@ -77,33 +77,34 @@ function actualizarTablas() {
 function checkPassword() {
     var password = $("#password-input").val();
     chkPass(password);
-    mostrarResultado(password,puntaje);
+    mostrarResultado(password, puntaje);
     actualizarTablas();
 }
 
-function init(){
+function init() {
     actualizarTablaPasswords();
     completarTablas();
 }
 
 
 /******************************* MANEJO DE TABLAS ****************************/
-function completarTabla(parametros,body){
-    for(var i = 0; i < parametros.length; i++) {
+function completarTabla(parametros, body) {
+    for (var i = 0; i < parametros.length; i++) {
         var parametro = parametros[i];
-        completarFila(body,parametro.getId(),parametro.getDescripcion());
+        completarFila(body, parametro.getId(), parametro.getDescripcion());
     }
 }
 
 function completarFila(body, id, texto) {
     var tr = document.createElement('tr');
-    var td1 = document.createElement('td');
-    td1.innerHTML = texto;
-    tr.appendChild(td1);
-    var td2 = document.createElement('td');
-    setIcon(td2);
-    tr.appendChild(td2);
-    tr.setAttribute("id",id);
+    var tdDescripcion = document.createElement('td');
+    tdDescripcion.innerHTML = texto;
+    tr.appendChild(tdDescripcion);
+    var tdIcono = document.createElement('td');
+    tdIcono.className = "td-align-right";
+    setIcon(tdIcono);
+    tr.appendChild(tdIcono);
+    tr.setAttribute("id", id);
     tr.className = disabled
     body.appendChild(tr);
 }
@@ -117,7 +118,7 @@ function setIcon(td) {
 }
 
 function actualizarValores(parametros) {
-    for(var i = 0; i < parametros.length; i++) {
+    for (var i = 0; i < parametros.length; i++) {
         var parametro = parametros[i];
         var tr = document.getElementById(parametro.id);
         var span = tr.lastChild.firstChild;
@@ -126,31 +127,30 @@ function actualizarValores(parametros) {
         icon.className = parametro.getClaseIcono();
         tr.className = (icon.className == iconoPorDefecto) ? disabled : "";
     }
-    
 }
 
 function actualizarTablaPasswords() {
     var tablaPasswordsBody = document.getElementById("tablaPasswordsBody");
     var pwdArray = getPasswords();
-        if(pwdArray !== null) {
-            while(tablaPasswordsBody.hasChildNodes()) {
-                tablaPasswordsBody.removeChild(tablaPasswordsBody.firstChild);
-            }
-            for (var i = pwdArray.length - 1; i >= 0; i--) {
-                var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                td.appendChild(document.createTextNode(pwdArray[i]));
-                tr.appendChild(td);
-                tablaPasswordsBody.appendChild(tr);
-            }
+    if (pwdArray !== null) {
+        while (tablaPasswordsBody.hasChildNodes()) {
+            tablaPasswordsBody.removeChild(tablaPasswordsBody.firstChild);
         }
+        for (var i = pwdArray.length - 1; i >= 0; i--) {
+            var tr = document.createElement('tr');
+            var td = document.createElement('td');
+            td.appendChild(document.createTextNode(pwdArray[i]));
+            tr.appendChild(td);
+            tablaPasswordsBody.appendChild(tr);
+        }
+    }
 }
 /*****************************************************************************/
 
 
 /*********************************** ALERT ***********************************/
-function mostrarResultado(password,puntaje){
-    if(password != "") {
+function mostrarResultado(password, puntaje) {
+    if (password != "") {
         var colorAlert = getColorAlert(puntaje);
         var complejidad = getComplejidad(puntaje);
         $("#alert-complejidad").text(complejidad);
@@ -160,11 +160,10 @@ function mostrarResultado(password,puntaje){
         $("#alert-resultado").removeClass().addClass(colorAlert);
     } else
         $("#alert-resultado").hide(500);
-
 }
 
 function getTituloAlert(puntaje) {
-    if(puntaje <= 60)
+    if (puntaje <= 60)
         return "Puedes hacerlo mejor!";
     else
         return "Bien hecho!";
@@ -172,8 +171,8 @@ function getTituloAlert(puntaje) {
 
 function getColorAlert(puntaje) {
     var color = alertDanger;
-    if(puntaje > 40) {
-        if(puntaje <= 60)
+    if (puntaje > 40) {
+        if (puntaje <= 60)
             color = alertWarning;
         else
             color = alertSuccess;
@@ -183,12 +182,12 @@ function getColorAlert(puntaje) {
 
 function getComplejidad(puntaje) {
     var complejidad = "muy insegura";
-    if(puntaje > 20) {
-        if(puntaje <= 40)
+    if (puntaje > 20) {
+        if (puntaje <= 40)
             complejidad = "insegura";
-        else if(puntaje <= 60)
-           complejidad = "poco segura";
-        else if(puntaje <= 80)
+        else if (puntaje <= 60)
+            complejidad = "poco segura";
+        else if (puntaje <= 80)
             complejidad = "segura";
         else
             complejidad = "muy segura";
@@ -200,25 +199,36 @@ function getComplejidad(puntaje) {
 
 /******************************* CHECK PASSWORD ******************************/
 String.prototype.strReverse = function () {
-	var newstring = "";
-	for (var s = 0; s < this.length; s++) {
-		newstring = this.charAt(s) + newstring;
-	}
-	return newstring;
+    var newstring = "";
+    for (var s = 0; s < this.length; s++) {
+        newstring = this.charAt(s) + newstring;
+    }
+    return newstring;
 }
 
 function chkPass(pwd) {
 
-    var puntajeP = 0; longitudP = 0; cantMayusculasP = 0, cantMinusculasP = 0, cantNumerosP = 0,
+    var puntajeP = 0;
+    longitudP = 0;
+    cantMayusculasP = 0, cantMinusculasP = 0, cantNumerosP = 0,
         cantSimbolosP = 0;
-    var soloLetrasP = false, soloNumerosP = false, secuenciaSimbolosP = false,
-        secuenciaLetrasP = false, secuenciaNumerosP = false;
+    var soloLetrasP = false,
+        soloNumerosP = false,
+        secuenciaSimbolosP = false,
+        secuenciaLetrasP = false,
+        secuenciaNumerosP = false;
 
-    if(pwd != ""){
-        var	nConsecAlpha = 0, nConsecNumber = 0,	nSeqAlpha = 0, nSeqNumber = 0,
+    if (pwd != "") {
+        var nConsecAlpha = 0,
+            nConsecNumber = 0,
+            nSeqAlpha = 0,
+            nSeqNumber = 0,
             nSeqSymbol = 0;
-        var nMultConsecAlpha = 2, nMultConsecNumber = 2;
-        var nMultSeqAlpha = 3, nMultSeqNumber = 3, nMultSeqSymbol = 3;
+        var nMultConsecAlpha = 2,
+            nMultConsecNumber = 2;
+        var nMultSeqAlpha = 3,
+            nMultSeqNumber = 3,
+            nMultSeqSymbol = 3;
         var nMultLength = nMultNumber = 4;
         var nMultSymbol = 6;
 
@@ -232,9 +242,11 @@ function chkPass(pwd) {
         var arrPwdLen = arrPwd.length;
 
         /* Loop sobre la contraseña para buscar coincidencias de minúsculas, mayúsculas, numeros y simbolos */
-        var nTmpAlphaUC = "", nTmpAlphaLC = "", nTmpNumber = "";
+        var nTmpAlphaUC = "",
+            nTmpAlphaLC = "",
+            nTmpNumber = "";
         for (var a = 0; a < arrPwdLen; a++) {
-            if (arrPwd[a].match(/[A-Z]/g)) {                        
+            if (arrPwd[a].match(/[A-Z]/g)) {
                 if (nTmpAlphaUC !== "") {
                     if ((nTmpAlphaUC + 1) == a) {
                         nConsecAlpha++;
@@ -242,7 +254,7 @@ function chkPass(pwd) {
                 }
                 nTmpAlphaUC = a;
                 cantMayusculasP++;
-            } else if (arrPwd[a].match(/[a-z]/g)) {                        
+            } else if (arrPwd[a].match(/[a-z]/g)) {
                 if (nTmpAlphaLC !== "") {
                     if ((nTmpAlphaLC + 1) == a) {
                         nConsecAlpha++;
@@ -250,7 +262,7 @@ function chkPass(pwd) {
                 }
                 nTmpAlphaLC = a;
                 cantMinusculasP++;
-            } else if (arrPwd[a].match(/[0-9]/g)) {                        
+            } else if (arrPwd[a].match(/[0-9]/g)) {
                 if (nTmpNumber !== "") {
                     if ((nTmpNumber + 1) == a) {
                         nConsecNumber++;
@@ -258,7 +270,7 @@ function chkPass(pwd) {
                 }
                 nTmpNumber = a;
                 cantNumerosP++;
-            } else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) {                        
+            } else if (arrPwd[a].match(/[^a-zA-Z0-9_]/g)) {
                 cantSimbolosP++;
             }
         }
@@ -266,7 +278,7 @@ function chkPass(pwd) {
         /* Busca secuencias de letras (hacia adelante y hacia atras) */
         var pwdLowerCase = pwd.toLowerCase();
         for (var s = 0; s < 23; s++) {
-            var sFwd = secuenciaLetras.substring(s, s+3);                  
+            var sFwd = secuenciaLetras.substring(s, s + 3);
             var sRev = sFwd.strReverse();
             if (pwdLowerCase.indexOf(sFwd) != -1 || pwdLowerCase.indexOf(sRev) != -1) {
                 nSeqAlpha++;
@@ -274,7 +286,7 @@ function chkPass(pwd) {
         }
         /* Busca secuencias de numeros (hacia adelante y hacia atras) */
         for (var s = 0; s < 8; s++) {
-            var sFwd = secuenciaNumeros.substring(s, s+3);                   
+            var sFwd = secuenciaNumeros.substring(s, s + 3);
             var sRev = sFwd.strReverse();
             if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
                 nSeqNumber++;
@@ -282,7 +294,7 @@ function chkPass(pwd) {
         }
         /* Busca secuencias de simbolos (hacia adelante y hacia atras) */
         for (var s = 0; s < 8; s++) {
-            var sFwd = secuenciaSimbolos.substring(s, s+3);                   
+            var sFwd = secuenciaSimbolos.substring(s, s + 3);
             var sRev = sFwd.strReverse();
             if (pwd.indexOf(sFwd) != -1 || pwd.indexOf(sRev) != -1) {
                 nSeqSymbol++;
@@ -291,16 +303,16 @@ function chkPass(pwd) {
 
         /* Asignacion de puntajes */
         if (cantMayusculasP > 0 && cantMayusculasP < longitudP) {
-            puntajeP += ((longitudP - cantMayusculasP) * 2);                  
+            puntajeP += ((longitudP - cantMayusculasP) * 2);
         }
         if (cantMinusculasP > 0 && cantMinusculasP < longitudP) {
-            puntajeP += ((longitudP - cantMinusculasP) * 2);                  
+            puntajeP += ((longitudP - cantMinusculasP) * 2);
         }
         if (cantNumerosP > 0 && cantNumerosP < longitudP) {
-            puntajeP += (cantNumerosP * nMultNumber);                  
+            puntajeP += (cantNumerosP * nMultNumber);
         }
         if (cantSimbolosP > 0) {
-            puntajeP += (cantSimbolosP * nMultSymbol);                  
+            puntajeP += (cantSimbolosP * nMultSymbol);
         }
 
         /* Reduccion de puntaje debido a malas practicas */
@@ -314,11 +326,11 @@ function chkPass(pwd) {
         }
         if (nConsecAlpha > 0) { // Existen letras consecutivas
             puntajeP -= (nConsecAlpha * nMultConsecAlpha);
-            
+
         }
         if (nConsecNumber > 0) { // Existen numeros consecutivos
             puntajeP -= (nConsecNumber * nMultConsecNumber);
-            
+
         }
         if (nSeqAlpha > 0) { // Existen secuencias de letras (3 caracteres o mas)
             puntajeP -= (nSeqAlpha * nMultSeqAlpha);
@@ -333,9 +345,9 @@ function chkPass(pwd) {
             secuenciaSimbolosP = true;
         }
 
-        if (puntajeP > 100) 
+        if (puntajeP > 100)
             puntajeP = 100;
-        else if (puntajeP < 0) 
+        else if (puntajeP < 0)
             puntajeP = 0;
     }
 
