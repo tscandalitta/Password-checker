@@ -1,6 +1,6 @@
 :root {
     --gris: #e9ecef;
-    --azul-marino: #4C739B;
+    --primary-color: #4C739B;
     --gris-oscuro: #343a40;
     --gris-900: #212529;
     --borde-tabla-oscuro: #454d55;
@@ -16,7 +16,7 @@ body{
     text-align: center;
     color: #ffffff;
     padding: 2em;
-    background-color: var(--azul-marino);
+    background-color: var(--primary-color);
 }
 
 .title {
@@ -119,8 +119,13 @@ body{
     display: none;
 }
 
-.footer{
+.footer {
     margin-top: 1em;
+}
+
+.card-header {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 [data-theme="dark"] {
