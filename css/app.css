@@ -2,8 +2,10 @@
     --gris: #e9ecef;
     --azul-marino: #4C739B;
     --gris-oscuro: #343a40;
+    --gris-900: #212529;
     --borde-tabla-oscuro: #454d55;
     --thead-dark: #43484e;
+    transition: 0.3s ease all;
 }
 
 body{
@@ -89,9 +91,7 @@ body{
     border: 1px solid var(--gris);
 }
 
-.table-dark{
-    transition: 0.3s ease all;
-}
+
 
 .td-align-right {
     text-align: right;
@@ -128,24 +128,20 @@ body{
 [data-theme="dark"] {
     background-color: var(--gris-oscuro) !important;
     color: #eee;
-  }
+}
   
-  [data-theme="dark"] .bg-light {
-    background-color: #333 !important;
-  }
-  
-  [data-theme="dark"] .bg-white {
-    background-color: #000 !important;
-  }
-  
-  [data-theme="dark"] .bg-black {
-    background-color: #eee !important;
-  }
-  
-  [data-theme="dark"] .table {
+[data-theme="dark"] .table, [data-theme="dark"] .card, [data-theme="dark"] hr {
     border-color: var(--borde-tabla-oscuro);
-  }
+}
   
-  [data-theme="dark"] thead {
+[data-theme="dark"] thead, [data-theme="dark"] .card-header {
     background-color: var(--thead-dark);
-  }
+}
+
+[data-theme="dark"] #password-icon {
+    color: var(--gris-900);
+}
+
+[data-theme="dark"] .list-group-item, [data-theme="dark"] .card-body {
+    background-color: var(--gris-oscuro);
+}
