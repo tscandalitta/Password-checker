@@ -14,6 +14,7 @@
     <title>¿Cuán segura es mi contraseña?</title>
   </head>
   <body>
+
     <div class="container-fluid my-header">
       <div class="row justify-content-start">
         <div class="col-1">
@@ -42,15 +43,14 @@
         </div>
         <div class="row p-3">
           <div class="col text-center">
-            <button type="button" class="btn btn-primary btn-lg" id="password-button">Almacenar</button>
+            <button type="button" class="btn btn-primary btn-lg mt-3" id="password-button">Almacenar</button>
           </div>
         </div>
     </div>
     
     <div class="container">
-      
       <div class="row p-3 justify-content-center">
-        <div class="col-6">
+        <div class="col-5">
           <div class="alert alert-secondary oculto" id="alert-resultado" role="alert">
             <h4 class="alert-heading" id="titulo-alert"></h4>
             <p class="mb-0">Tu contraseña es <strong id="alert-complejidad"></strong>. 
@@ -59,8 +59,8 @@
         </div>
       </div>
       
-      <div class="row justify-content-between">
-        <div class="col-md-6">
+      <div class="row">
+        <div class="col">
           <table class="table" id="tabla-puntos-favor">
             <thead class="thead-light">
               <tr>
@@ -70,6 +70,8 @@
             <tbody id="tabla-puntos-favor-body">
             </tbody>
           </table>
+        </div>
+        <div class="col">
           <table class="table" id="tabla-puntos-contra">
             <thead class="thead-light">
               <tr>
@@ -80,7 +82,7 @@
             </tbody>
           </table>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
           <div class="table-responsive">
             <table class="table" id="tablaPasswords">
               <thead class="thead-light">
