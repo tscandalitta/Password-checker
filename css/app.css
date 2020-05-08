@@ -90,9 +90,12 @@ body {
 
 .pwd-icon {
     font-size: 1.7em;
-    margin: auto;
     float: right;
     cursor: pointer;
+}
+
+.theme-switch {
+    font-size: 0.9em;
 }
 
 .table {
@@ -107,8 +110,12 @@ body {
     color: var(--gris);
 }
 
+.icono-gris-oscuro {
+    color: rgb(167, 167, 167);
+}
+
 .icono-amarillo {
-    color: rgb(238, 221, 65);
+    color: rgb(233, 192, 56);
 }
 
 .icono-verde {
@@ -131,6 +138,15 @@ body {
     margin-top: 1em;
 }
 
+#label-tema {
+    font-size: 0.9em;
+}
+
+.my-header span i {
+    font-size: 1.7em;
+    cursor: pointer;
+    vertical-align: middle;
+}
 .footer-icon {
     max-width: 1.2em;
     max-height: 1.2em;
@@ -152,8 +168,7 @@ body {
     border-color: var(--borde-tabla-oscuro);
 }
 
-[data-theme="dark"] thead,
-[data-theme="dark"] .card-header {
+[data-theme="dark"] thead {
     background-color: var(--thead-dark);
 }
 

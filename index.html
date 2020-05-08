@@ -23,11 +23,11 @@
         <div class="col-10">
           <h1 class="title">¿Cuán segura es mi contraseña?</h1>
         </div>
-        <div class="col-1">
-          <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="darkSwitch"/>
-            <label class="custom-control-label" for="darkSwitch">Modo oscuro</label>
-          </div>
+        <div class="col-1 align-self-end">
+            <label for="icono-tema" id="label-tema">Modo oscuro</label>
+            <span class="" id="span-tema">
+              <i id="icono-tema" class="fas"></i>
+            </span>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
           <div class="col-10">
             <input type="password" class="password" id="password-input" placeholder="Ingresa tu contraseña">
           </div>
-          <div class="col-1">
+          <div class="col-1 align-self-center">
             <i class="far fa-eye pwd-icon" id="password-icon" title="Mostrar contraseña"></i>
           </div>
         </div>
@@ -122,11 +122,13 @@
     <div class="container mt-5">
       <hr>
       <footer class="footer">
-        <div class="row justify-content-between">
+        <div class="row justify-content-center">
           <div class="col-auto">
             <p>Hecho por <a href="https://github.com/tscandalitta" target="_blank">Tomás Scandalitta</a>.</p>
           </div>
-          <div class="col-auto">            
+          <div class="col-auto mx-5">
+            <vr></vr>
+            
             <p><img src="icono.png" class="footer-icon"/> ¿Cuán segura es mi contraseña?, Inc</p>
           </div>
           <div class="col-auto">
