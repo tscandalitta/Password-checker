@@ -55,9 +55,11 @@ function togglePassword() {
     if (password.type == "password") {
         password.type = "text";
         icon.className = iconoPasswordOculta;
+        icon.setAttribute("title","Ocultar contraseña");
     } else {
         password.type = "password";
         icon.className = iconoPasswordVisible;
+        icon.setAttribute("title","Mostrar contraseña");
     }
 }
 
