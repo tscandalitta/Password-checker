@@ -7,7 +7,7 @@ const passwordsAlmacenadas = 5;
  * @param {string} password - contraseña a almancenar
  */
 function storePassword(password) {  
-    var pwdArray = getPasswords();
+    let pwdArray = getPasswords();
     if(pwdArray !== null) {
         insertar(pwdArray,password);
         localStorage.setItem(keylocalStorage, JSON.stringify(pwdArray));
@@ -34,7 +34,7 @@ function insertar(array, password) {
  */
 function getPasswords() {
     if (typeof(Storage) !== "undefined") {  
-        var pwdArray = JSON.parse(localStorage.getItem(keylocalStorage));
+        let pwdArray = JSON.parse(localStorage.getItem(keylocalStorage));
         if(pwdArray == null)
             pwdArray = [];
         return pwdArray;

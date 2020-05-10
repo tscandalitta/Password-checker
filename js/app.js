@@ -36,11 +36,8 @@ var parametrosEnContra = [
 document.getElementById("password-input").addEventListener("input", checkPassword);
 
 $("#password-button").click(function () {
-    var password = $("#password-input").val();
-    if (password != "") {
-        storePassword(password);
+        almacenarPassword();
         actualizarTablaPasswords();
-    }
 });
 
 $("#password-icon").click(function () {
@@ -49,6 +46,13 @@ $("#password-icon").click(function () {
 
 init();
 
+function almacenarPassword(){
+    let password = $("#password-input").val();
+    if (password != "") {
+        let pwd = {password,puntaje}
+        storePassword(pwd);
+    }
+}
 function togglePassword() {
     var password = document.getElementById("password-input");
     var icon = document.getElementById("password-icon");
@@ -140,9 +144,13 @@ function actualizarTablaPasswords() {
         }
         for (var i = pwdArray.length - 1; i >= 0; i--) {
             var tr = document.createElement('tr');
-            var td = document.createElement('td');
-            td.appendChild(document.createTextNode(pwdArray[i]));
-            tr.appendChild(td);
+            var tdPassword = document.createElement('td');
+            var tdPuntaje = document.createElement('td');
+            tdPassword.appendChild(document.createTextNode(pwdArray[i].password));
+            tdPuntaje.appendChild(document.createTextNode(pwdArray[i].puntaje + "/100"));
+            tdPuntaje.className = "td-align-right";
+            tr.appendChild(tdPassword);
+            tr.appendChild(tdPuntaje);
             tablaPasswordsBody.appendChild(tr);
         }
     }
