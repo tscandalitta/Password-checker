@@ -1,16 +1,5 @@
 var iconoPasswordOculta = "far fa-eye-slash pwd-icon";
 var iconoPasswordVisible = "far fa-eye pwd-icon";
-var iconoPorDefecto = "fas fa-minus";
-var iconoCruz = "fas fa-times";
-var iconoCheck = "fas fa-check";
-var iconoCheckDoble = "fas fa-check-double";
-var iconoVerde = "icono-verde";
-var iconoAmarillo = "icono-amarillo";
-var iconoRojo = "icono-rojo";
-var disabled = "disabled";
-var alertSuccess = "alert alert-success";
-var alertDanger = "alert alert-danger";
-var alertWarning = "alert alert-warning";
 
 var puntaje = 0;
 var longitud = new ParametroLongitud("longitud", "Longitud", 0);

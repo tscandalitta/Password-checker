@@ -1,3 +1,11 @@
+var iconoPorDefecto = "fas fa-minus";
+var iconoCruz = "fas fa-times";
+var iconoCheck = "fas fa-check";
+var iconoCheckDoble = "fas fa-check-double";
+var iconoVerde = "icono-verde";
+var iconoAmarillo = "icono-amarillo";
+var iconoRojo = "icono-rojo";
+
 class Parametro {
     constructor(id, descripcion, valor) {
         this.id = id;

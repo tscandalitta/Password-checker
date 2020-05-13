@@ -1,3 +1,9 @@
+
+var alertSuccess = "alert alert-success";
+var alertDanger = "alert alert-danger";
+var alertWarning = "alert alert-warning";
+var disabled = "disabled";
+
 /******************************* MANEJO DE TABLAS ****************************/
 function completarTabla(parametros, body) {
     for (var i = 0; i < parametros.length; i++) {
@@ -16,7 +22,7 @@ function completarFila(body, id, texto) {
     setIcon(tdIcono);
     tr.appendChild(tdIcono);
     tr.setAttribute("id", id);
-    tr.className = disabled
+    tr.className = disabled;
     body.appendChild(tr);
 }
 
