@@ -25,8 +25,8 @@ var parametrosEnContra = [
 document.getElementById("password-input").addEventListener("input", checkPassword);
 
 $("#password-button").click(function () {
-        almacenarPassword();
-        actualizarTablaPasswords();
+    almacenarPassword();
+    actualizarTablaPasswords();
 });
 
 $("#password-icon").click(function () {
@@ -35,24 +35,28 @@ $("#password-icon").click(function () {
 
 init();
 
-function almacenarPassword(){
+function almacenarPassword() {
     let password = $("#password-input").val();
     if (password != "") {
-        let pwd = {password,puntaje}
+        let pwd = {
+            password,
+            puntaje
+        }
         storePassword(pwd);
     }
 }
+
 function togglePassword() {
     var password = document.getElementById("password-input");
     var icon = document.getElementById("password-icon");
     if (password.type == "password") {
         password.type = "text";
         icon.className = iconoPasswordOculta;
-        icon.setAttribute("title","Ocultar contraseña");
+        icon.setAttribute("title", "Ocultar contraseña");
     } else {
         password.type = "password";
         icon.className = iconoPasswordVisible;
-        icon.setAttribute("title","Mostrar contraseña");
+        icon.setAttribute("title", "Mostrar contraseña");
     }
 }
 
@@ -93,9 +97,11 @@ String.prototype.strReverse = function () {
 
 function chkPass(pwd) {
 
-    var puntajeP = 0;
-    longitudP = 0;
-    cantMayusculasP = 0, cantMinusculasP = 0, cantNumerosP = 0,
+    var puntajeP = 0,
+        longitudP = 0,
+        cantMayusculasP = 0,
+        cantMinusculasP = 0,
+        cantNumerosP = 0,
         cantSimbolosP = 0;
     var soloLetrasP = false,
         soloNumerosP = false,
@@ -114,7 +120,8 @@ function chkPass(pwd) {
         var nMultSeqAlpha = 3,
             nMultSeqNumber = 3,
             nMultSeqSymbol = 3;
-        var nMultLength = nMultNumber = 4;
+        var nMultLength = 4,
+            nMultNumber = 4;
         var nMultSymbol = 6;
 
         var secuenciaLetras = "abcdefghijklmnopqrstuvwxyz";
@@ -218,7 +225,7 @@ function chkPass(pwd) {
         }
 
         puntajeP -= (nConsecAlpha + nConsecNumber + nConsecSymbol) * nMultConsecChar; // Hay caracteres consecutivos
-        
+
         if (nSeqAlpha > 0) { // Existen secuencias de letras (3 caracteres o mas)
             puntajeP -= (nSeqAlpha * nMultSeqAlpha);
             secuenciaLetrasP = true;
