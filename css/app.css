@@ -94,20 +94,12 @@ body {
     cursor: pointer;
 }
 
-.theme-switch {
-    font-size: 0.9em;
-}
-
 .table {
     border: 1px solid var(--gris);
 }
 
 .td-align-right {
     text-align: right;
-}
-
-.icono-gris {
-    color: var(--gris);
 }
 
 .icono-gris-oscuro {
